@@ -1,0 +1,29 @@
+.features-icons {
+  padding-top: 0rem;
+  padding-bottom: 3rem;
+  .features-icons-item {
+    max-width: 20rem;
+    .features-icons-icon {
+      justify-content:center;
+      height: 7rem;
+      i {
+        font-size: 4.5rem;
+      }
+    }
+    &:hover {
+      .features-icons-icon {
+        i {
+          font-size: 5rem;
+        }
+      }
+    }
+  }
+  img {
+    max-width: 6rem;
+    max-height: 7rem;
+  }
+}
+
+.uber-logo {
+  height: 1.75rem;
+}

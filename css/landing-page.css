@@ -1,0 +1,276 @@
+/*!
+ * Start Bootstrap - Landing Page v5.0.0 (https://startbootstrap.com/template-overviews/landing-page)
+ * Copyright 2013-2018 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-landing-page/blob/master/LICENSE)
+ */
+
+body {
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.tag {
+  padding: 2rem;
+  background-color: white;
+  -webkit-box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+.badge {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  background: #d50000;
+  border: 2px solid #d50000;
+  border-radius: 5px;
+  padding: 2px;
+  display: inline-block;
+  -webkit-transform: translate(5%, -15%);
+  transform: translate(5%, -15%);
+}
+
+.badge-h3 {
+  display: inline-block;
+  font-size: 1.67rem;
+  margin-top: 0.5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+}
+
+.js-yellow {
+  /* You can multiply the width by 0.58 to get the font-size..
+     so for a 100px logo, font size is 100 * 0.58 = 58px */
+  font-size: calc(attr(width) * 0.58);
+  /* font-size: calc( attr(width) * 0.58 )... If only one could. */
+  /* oh god no... can someone please get http://www.houseind.com/fonts/neutraface2 into the public domain. */
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  letter-spacing: -1px;
+  line-height: 1.1em;
+  font-weight: 700;
+  background-color: #f3df49;
+  color: #2e2e2c;
+  /* Increase the font weight with a faux-outline...*/
+  /* ...but too much and you trade-off the sharpness of the font. */
+  /*text-shadow:-1px 0 #2e2e2c, 0 1px #2e2e2c, 1px 0 #2e2e2c, 0 -1px #2e2e2c;*/
+}
+
+.spam_policy {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #b5b5b5;
+}
+
+input[type="email"] {
+  font-size: 1rem;
+}
+
+.instructions {
+  padding: 0 0 2rem 0;
+}
+
+.justify {
+  text-align: justify;
+}
+
+@media screen and (min-width: 1008px) {
+  .tag {
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    margin-bottom: 0;
+  }
+}
+
+header.masthead {
+  position: relative;
+  height: auto;
+  width: 100%;
+  background-color: #343a40;
+  background: url("../img/array-functions-2.jpg") no-repeat center center;
+  background-size: cover;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
+header.masthead .overlay {
+  position: absolute;
+  background-color: #212529;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.9;
+}
+
+header.masthead h1 {
+  font-size: 2rem;
+}
+
+@media (min-width: 768px) {
+  header.masthead h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  header.masthead {
+    padding-top: 3rem;
+  }
+}
+
+.showcase .showcase-text {
+  padding: 3rem;
+}
+
+.showcase .showcase-img {
+  min-height: 30rem;
+  background-size: cover;
+}
+
+@media (min-width: 768px) {
+  .showcase .showcase-text {
+    padding: 7rem;
+  }
+}
+
+.features-icons {
+  padding-top: 0rem;
+  padding-bottom: 3rem;
+}
+
+.features-icons .features-icons-item {
+  max-width: 20rem;
+}
+
+.features-icons .features-icons-item .features-icons-icon {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 7rem;
+}
+
+.features-icons .features-icons-item .features-icons-icon i {
+  font-size: 4.5rem;
+}
+
+.features-icons .features-icons-item:hover .features-icons-icon i {
+  font-size: 5rem;
+}
+
+.features-icons img {
+  max-width: 6rem;
+  max-height: 7rem;
+}
+
+.uber-logo {
+  height: 1.75rem;
+}
+
+.testimonials {
+  padding-top: 3rem;
+  padding-bottom: 7rem;
+}
+
+.testimonials .testimonial-item {
+  max-width: 18rem;
+}
+
+.testimonials .testimonial-item img {
+  max-width: 12rem;
+}
+
+.call-to-action {
+  position: relative;
+  background-color: #f8f9fa;
+  background-size: cover;
+  padding-top: 2rem;
+  padding-bottom: 7rem;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  font-weight: 100;
+  line-height: 2rem;
+}
+
+.cta-button {
+  width: 100%;
+}
+
+.cta-form {
+  padding-top: 5rem;
+}
+
+.price-box {
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: .7px;
+  font-weight: 400;
+  color: black;
+  background: #fff;
+  border-radius: 5px;
+  height: 23rem;
+  padding: 1rem;
+  margin: 0 auto 3rem auto;
+  -webkit-box-shadow: 0 2px 30px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 30px 0 rgba(0, 0, 0, 0.15);
+}
+
+.head {
+  font-family: 'SFProText',Arial,'Helvetica Neue',sans-serif;
+  font-size: 1.8rem;
+}
+
+.mark-white {
+  background-color: #fff;
+  color: red;
+  margin-right: 0.5rem;
+}
+
+.plan {
+  height: 11.5rem;
+}
+
+.plan li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.price {
+  font-size: 2.5rem;
+  color: #000;
+  font-weight: 400;
+  line-height: 1;
+  height: 4rem;
+}
+
+.period {
+  font-size: 0.65rem;
+  color: #4f4f4f;
+}
+
+sup {
+  color: #4f4f4f;
+  font-size: 1rem;
+  font-weight: 300;
+  vertical-align: super;
+}
+
+@media (max-width: 768px) {
+  .cta-form {
+    padding-top: 1rem;
+  }
+}
+
+footer.footer {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
