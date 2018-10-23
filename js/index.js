@@ -12,8 +12,8 @@ new Array(...document.getElementsByTagName('input')).forEach(
   }
 )
 
-function preflight(emailInput) {
-  var email = document.getElementById(emailInput).value;
+function preflight(emailInputID) {
+  var email = document.getElementById(emailInputID).value;
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -27,8 +27,7 @@ function preflight(emailInput) {
   return false;
 } // end function SignUpFree(emailInput)
 
-function SignUpFree(emailInput) {
-  var email = document.getElementById(emailInput).value;
+function SignUpFree(email) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
