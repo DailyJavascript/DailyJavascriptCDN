@@ -12,6 +12,21 @@ new Array(...document.getElementsByTagName('input')).forEach(
   }
 )
 
+function preflight(emailInput) {
+  var email = document.getElementById(emailInput).value;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var response = this.responseText + "";
+        if (response == "proceed") SignUpFree(email);
+        return true;
+    } // end if (this.readyState == 4 && this.status == 200)
+  } // end xhttp.onreadystatechange = function()
+  xhttp.open("GET","https://dailyjavascript.herokuapp.com/users/preflight",true);
+  xhttp.send();
+  return false;
+} // end function SignUpFree(emailInput)
+
 function SignUpFree(emailInput) {
   var email = document.getElementById(emailInput).value;
   var xhttp = new XMLHttpRequest();
