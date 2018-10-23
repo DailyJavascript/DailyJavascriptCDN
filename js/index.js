@@ -11,3 +11,5 @@ new Array(...document.getElementsByTagName('input')).forEach(
     });
   }
 )
+
+alert("this works");
