@@ -22,5 +22,5 @@ function SignUpFree(emailInput) {
   } // end xhttp.onreadystatechange = function()
   xhttp.open("POST","https://dailyjavascript.herokuapp.com/users",true);
   xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xhttp.send("email="+email+"&membershipLevel='free'");
+  xhttp.send("email="+email+"&membershipLevel=free");
 } // end function SignUpFree(emailInput)
