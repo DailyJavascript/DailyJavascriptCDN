@@ -52,7 +52,7 @@
           <div class="form-row">
             <div class="col-md-7 mb-2">
                 <!-- email pattern is from https://github.com/coliff/html5-email-regex -->
-              <input
+              <input id="email1"
                 type="email"
                 class="form-control form-control-lg"
                 placeholder="Enter your email..."
@@ -62,7 +62,7 @@
                 >
             </div>
             <div class="col-12 col-md-3">
-              <button type="submit" class="btn btn-lg btn-outline-light cta-button">Sign up for free!</button>
+              <button type="submit" class="btn btn-lg btn-outline-light cta-button" onclick="SignUpFree('email1');">Sign up for free!</button>
             </div>
           </div>
         </form>
@@ -249,7 +249,7 @@
         <div class="form-row justify-content-center">
           <div class="col-md-7 mb-2">
              <!-- email pattern is from https://github.com/coliff/html5-email-regex -->
-            <input
+            <input id="email2" 
               type="email"
               class="form-control form-control-lg"
               placeholder="Enter your email..."
@@ -258,7 +258,7 @@
             >
           </div>
           <div class="col-12 col-md-3">
-            <button type="submit" class="btn btn-lg btn-outline-dark cta-button">Sign up for free!</button>
+            <button type="submit" class="btn btn-lg btn-outline-dark cta-button" onclick="SignUpFree('email2');">Sign up for free!</button>
           </div>
         </div>
       </form>

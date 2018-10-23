@@ -12,4 +12,15 @@ new Array(...document.getElementsByTagName('input')).forEach(
   }
 )
 
-alert("this works");
+function SignUpFree(emailInput) {
+  var email = document.getElementById(emailInput).value;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+    } // end if (this.readyState == 4 && this.status == 200)
+  } // end xhttp.onreadystatechange = function()
+  xhttp.open("POST","https://dailyjavascript.herokuapp.com/users",true);
+  xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xhttp.send("email="+email);
+} // end function SignUpFree(emailInput)
