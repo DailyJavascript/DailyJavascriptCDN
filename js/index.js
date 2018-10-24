@@ -58,7 +58,7 @@ window.addEventListener("popstate", function(event) {
 
 function signUpEightDollars() {         
   handler.open({
-    image: '/square-image.png',
+    image: '/img/square-image.png',
     name: 'DailyJavascript',
     description: 'DailyJavascript $8 Membership',
     amount: 800,
@@ -68,7 +68,7 @@ function signUpEightDollars() {
 
 function signUpTenDollars() {       
   handler.open({
-    image: '/square-image.png',
+    image: '/img/square-image.png',
     name: 'DailyJavascript',
     description: 'DailyJavascript $10 Membership',
     amount: 1000,
