@@ -19,7 +19,7 @@ function preflight(emailInputID) {
     if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText + "";
         console.log(response);
-        if (response == "proceed") SignUpFree(email);
+        if (response == "proceed") signUpFree(email);
         return true;
     } // end if (this.readyState == 4 && this.status == 200)
   } // end xhttp.onreadystatechange = function()
@@ -28,7 +28,7 @@ function preflight(emailInputID) {
   return false;
 } // end function SignUpFree(emailInput)
 
-function SignUpFree(email) {
+function signUpFree(email) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -39,3 +39,39 @@ function SignUpFree(email) {
   xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xhttp.send("email="+email+"&membershipLevel=free");
 } // end function SignUpFree(emailInput)
+
+var handler = StripeCheckout.configure({
+  key: 'pk_test_ZMMqCmUQPkC2QjqkA6ZknBg7',
+  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+  locale: 'auto',
+  zipCode: true,
+  token: function(token) {
+    console.log(token);
+    // You can access the token ID with `token.id`.
+    // Get the token ID to your server-side code for use.
+  }
+}); // end var handler = StripeCheckout.configure({
+
+window.addEventListener("popstate", function(event) {
+  handler.close();
+});
+
+function signUpEightDollars() {         
+  handler.open({
+    image: '/square-image.png',
+    name: 'DailyJavascript',
+    description: 'DailyJavascript $8 Membership',
+    amount: 800,
+    panelLabel: 'Pay {{amount}}'
+  }); 
+} // end function signUpEightDollars()
+
+function signUpTenDollars() {       
+  handler.open({
+    image: '/square-image.png',
+    name: 'DailyJavascript',
+    description: 'DailyJavascript $10 Membership',
+    amount: 1000,
+    panelLabel: 'Pay {{amount}}'
+  });   
+} // end function signUpTenDollars()
