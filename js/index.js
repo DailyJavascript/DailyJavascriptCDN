@@ -1,8 +1,7 @@
 //get html collection of input elements and convert into an array
 new Array(...document.getElementsByTagName('input')).forEach(
   (emailInput) =>{
-    emailInput.addEventListener("input", function (event) {
-      console.log(emailInput.validity)
+    emailInput.addEventListener("input", function () {
       if (emailInput.validity.patternMismatch) {
         emailInput.setCustomValidity("Email does not appear to be a valid email address");
       } else {
@@ -56,22 +55,22 @@ window.addEventListener("popstate", function(event) {
   handler.close();
 });
 
-function signUpEightDollars() {         
+function signUpEightDollars() {
   handler.open({
     image: '/img/square-image.png',
     name: 'DailyJavascript',
     description: 'DailyJavascript $8 Membership',
     amount: 800,
     panelLabel: 'Pay {{amount}}'
-  }); 
+  });
 } // end function signUpEightDollars()
 
-function signUpTenDollars() {       
+function signUpTenDollars() {
   handler.open({
     image: '/img/square-image.png',
     name: 'DailyJavascript',
     description: 'DailyJavascript $10 Membership',
     amount: 1000,
     panelLabel: 'Pay {{amount}}'
-  });   
+  });
 } // end function signUpTenDollars()
