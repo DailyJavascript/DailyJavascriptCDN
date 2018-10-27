@@ -11,11 +11,14 @@ new Array(...document.getElementsByTagName('input')).forEach(
   }
 )
 
-function preflight(emailInputID) {
+function preflight(event, emailInputID) {
   var emailElement = document.getElementById(emailInputID);
   if (!emailElement.value || !emailElement.checkValidity()) {
     return;
   }
+  //prevent page from reloading
+  event.preventDefault();
+  //send request
   makePreflightRequest(emailElement);
 }
 
