@@ -84,3 +84,25 @@ input[type="email"] {
     margin-bottom: 0;
   }
 }
+
+
+.error-border {
+    // Show a border around error message
+  border: 0.1em solid #B22222;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.error {
+  background-image: url("../img/close.svg");
+  position: absolute;
+  top: 1.1em;
+  right: 1em;
+  z-index: 2;
+  display: block;
+  width: 0.75em;
+  height: 0.75em;
+  line-height: 34px;
+  text-align: center;
+  pointer-events: none
+}
