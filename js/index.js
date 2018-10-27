@@ -1,15 +1,33 @@
+function addCustomErrorMessage(emailInput){
+  if (emailInput.validity.patternMismatch) {
+    emailInput.setCustomValidity("Email does not appear to be a valid email address");
+  } else {
+    emailInput.setCustomValidity("");
+  }
+}
+
+function maybeAddErrorStyling(emailInput){
+  if (emailInput.validity.valid && (emailInput.nextElementSibling.classList.contains('error')) || emailInput.value === "") {
+    emailInput.classList.remove('error-border');
+    emailInput.nextElementSibling.classList.remove('error');
+    return;
+  } else if (emailInput.validity.valid){
+    return;
+  } else {
+    emailInput.classList.add('error-border');
+    emailInput.nextElementSibling.classList.add('error')
+  }
+}
 //get html collection of input elements and convert into an array
 new Array(...document.getElementsByTagName('input')).forEach(
   (emailInput) =>{
     emailInput.addEventListener("input", function () {
-      if (emailInput.validity.patternMismatch) {
-        emailInput.setCustomValidity("Email does not appear to be a valid email address");
-      } else {
-        emailInput.setCustomValidity("");
-      }
+      addCustomErrorMessage(emailInput);
+      maybeAddErrorStyling(emailInput);
     });
   }
 )
+
 
 function preflight(event, emailInputID) {
   var emailElement = document.getElementById(emailInputID);
