@@ -12,20 +12,28 @@ new Array(...document.getElementsByTagName('input')).forEach(
 )
 
 function preflight(emailInputID) {
-  var email = document.getElementById(emailInputID).value;
+  var emailElement = document.getElementById(emailInputID);
+  if (!emailElement.value || !emailElement.checkValidity()) {
+    return;
+  }
+  makePreflightRequest(emailElement);
+}
+
+function makePreflightRequest(emailElement) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText + "";
         console.log(response);
-        if (response == "proceed") signUpFree(email);
+        if (response == "proceed") signUpFree(emailElement.value);
         return true;
     } // end if (this.readyState == 4 && this.status == 200)
   } // end xhttp.onreadystatechange = function()
   xhttp.open("GET","https://dailyjavascript.herokuapp.com/users/preflight",true);
   xhttp.send();
   return false;
-} // end function SignUpFree(emailInput)
+}
+// end function SignUpFree(emailInput)
 
 function signUpFree(email) {
   var xhttp = new XMLHttpRequest();
