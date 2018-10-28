@@ -1,3 +1,9 @@
+// global variables
+plan = "";
+
+//
+
+
 function addCustomErrorMessage(emailInput){
   if (emailInput.validity.patternMismatch) {
     emailInput.setCustomValidity("Email does not appear to be a valid email address");
@@ -38,7 +44,7 @@ function preflight(event, emailInputID) {
   event.preventDefault();
   //send request
   makePreflightRequest(emailElement);
-}
+} // end function preflight(event, emailInputID)
 
 function makePreflightRequest(emailElement) {
   var xhttp = new XMLHttpRequest();
@@ -53,20 +59,47 @@ function makePreflightRequest(emailElement) {
   xhttp.open("GET","https://dailyjavascript.herokuapp.com/users/preflight",true);
   xhttp.send();
   return false;
-}
-// end function SignUpFree(emailInput)
+} // end function makePreflightRequest(emailElement)
 
 function signUpFree(email) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
+        var response = this.responseText + "";
+        if (response == "good") {
+          // --- action for successful free signup
+          // replace below code
+          alert("Successful");
+        } else if (response == "bad") {
+          // --- action for failure of free signup
+          alert("Failed");
+        } // end if...else response
     } // end if (this.readyState == 4 && this.status == 200)
   } // end xhttp.onreadystatechange = function()
   xhttp.open("POST","https://dailyjavascript.herokuapp.com/users",true);
   xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xhttp.send("email="+email+"&membershipLevel=free");
+  xhttp.send("email="+email+"&membership_level=free&membership_code=1");
 } // end function SignUpFree(emailInput)
+
+function createStripeSubscription(stripeToken) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var response = this.responseText + "";
+        if (response == "good") {
+          // ---------  action for successful paid subscription
+          // replace below code
+          alert("Successful");
+        } else if (response == "bad") {
+          // --------- action for failure of paid subscription
+          alert("Failed");
+        } // end if...else response
+    } // end if (this.readyState == 4 && this.status == 200)
+  } // end xhttp.onreadystatechange = function()
+  xhttp.open("POST","https://dailyjavascript.herokuapp.com/users",true);
+  xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xhttp.send("email=" + stripeToken.email + "&membership_level=" + plan + "&membership_code=2&stripe_token_id=" + stripeToken.id);
+} // end function createStripeSubscription(stripeToken)
 
 var handler = StripeCheckout.configure({
   key: 'pk_test_ZMMqCmUQPkC2QjqkA6ZknBg7',
@@ -74,9 +107,7 @@ var handler = StripeCheckout.configure({
   locale: 'auto',
   zipCode: true,
   token: function(token) {
-    console.log(token);
-    // You can access the token ID with `token.id`.
-    // Get the token ID to your server-side code for use.
+    createStripeSubscription(token);
   }
 }); // end var handler = StripeCheckout.configure({
 
@@ -85,6 +116,7 @@ window.addEventListener("popstate", function(event) {
 });
 
 function signUpEightDollars() {
+  plan = "eight_dollars";
   handler.open({
     image: '/img/js.png',
     name: 'Daily JavaScript',
@@ -95,6 +127,7 @@ function signUpEightDollars() {
 } // end function signUpEightDollars()
 
 function signUpTenDollars() {
+  plan = "ten_dollars";
   handler.open({
     image: '/img/js.png',
     name: 'Daily JavaScript',
