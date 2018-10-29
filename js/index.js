@@ -120,10 +120,10 @@ function createStripeSubscription(stripeToken) {
         if (response == "good") {
           // ---------  action for successful paid subscription
           // replace below code
-          showModal("success");
+          toggleModal("success");
         } else if (response == "bad") {
           // --------- action for failure of paid subscription
-          showeModal("failure");
+          toggleModal("failure");
         } // end if...else response
     } // end if (this.readyState == 4 && this.status == 200)
   } // end xhttp.onreadystatechange = function()
