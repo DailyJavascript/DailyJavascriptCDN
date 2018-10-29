@@ -3,6 +3,37 @@ plan = "";
 
 //
 
+function showModal(response) {
+  new Array(...document.getElementsByClassName('fade')).forEach((element) => {
+    if (element.id === response || element.classList.contains('modal-backdrop')) {
+      element.classList.add('show');
+      element.style.display = 'block';
+      element.removeAttribute('aria-hidden')
+      element.scrollTop = 0
+      document.body.className="modal-open";
+    }
+  })
+}
+
+function hideModal() {
+  new Array(...document.getElementsByClassName('fade')).forEach((element) => {
+    if (element.classList.contains('show')){
+      element.classList.remove('show');
+      element.style.display = 'none';
+      element.setAttribute('aria-hidden', true)
+      element.scrollTop = 0
+      document.body.className=""
+    }
+  })
+}
+
+function toggleModal(response) {
+  document.getElementById(response)
+    .className
+    .indexOf('show') > -1
+    ? hideModal()
+    : showModal(response);
+}
 
 function addCustomErrorMessage(emailInput){
   if (emailInput.validity.patternMismatch) {
@@ -69,10 +100,10 @@ function signUpFree(email) {
         if (response == "good") {
           // --- action for successful free signup
           // replace below code
-          alert("Successful");
+          toggleModal("success");
         } else if (response == "bad") {
           // --- action for failure of free signup
-          alert("Failed");
+          toggleModal("failure");
         } // end if...else response
     } // end if (this.readyState == 4 && this.status == 200)
   } // end xhttp.onreadystatechange = function()
@@ -89,10 +120,10 @@ function createStripeSubscription(stripeToken) {
         if (response == "good") {
           // ---------  action for successful paid subscription
           // replace below code
-          alert("Successful");
+          showModal("success");
         } else if (response == "bad") {
           // --------- action for failure of paid subscription
-          alert("Failed");
+          showeModal("failure");
         } // end if...else response
     } // end if (this.readyState == 4 && this.status == 200)
   } // end xhttp.onreadystatechange = function()

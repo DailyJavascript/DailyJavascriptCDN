@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -14,8 +13,8 @@
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css"> -->
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
     type="text/css">
 
@@ -312,7 +311,44 @@
   <script src="https://checkout.stripe.com/checkout.js"></script>
   <script src="js/index.js"></script>
   <!-- <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+  <div class="modal-backdrop fade hidden"></div>
+  <div id="failure" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <object class="fail" type="image/svg+xml" data="./img/fail_mark.svg">
+              <img src="./img/fail_mark.svg">
+          </object>
+        <div class="modal-body">
+          <h1 class="modal-header-text text-center">Failure</h1>
+          <div class="json-response">Uh, oh!  Looks like there's an issue.  Please try again later.</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lg btn-block btn-danger" data-dismiss="modal" aria-label="Close" onClick="hideModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="success" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <object class="success" type="image/svg+xml" data="./img/success_checkmark.svg">
+                <img src="./img/success_checkmark.svg">
+            </object>
+          <div class="modal-body">
+            <h1 class="modal-header-text text-center">Success</h1>
+            <div class="json-response">Thank you for joining Daily JavaScript!</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-lg btn-block btn-success" data-dismiss="modal" aria-label="Close" onClick="hideModal()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 
 </html>
