@@ -85,6 +85,7 @@ function updateModal(response) {
   obj.data = objectData[response];
   document.getElementById("modal-img").src = objectData[response];
   document.getElementById('modal-btn').classList.add(btnClass[response]);
+  document.getElementById('modal-btn').classList.remove("hidden");
 }
 
 function showModal(response) {
