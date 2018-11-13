@@ -186,14 +186,6 @@ function createStripeSubscription(stripeToken) {
 
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      if (Date.now() - currentTime < 1000) {
-        setTimeout(function () {
-          toggleModal('loading');
-        }, Date.now() - currentTime);
-      } else {
-        toggleModal('loading');
-      }
-
       var response = this.responseText + "";
 
       if (response == "good") {
