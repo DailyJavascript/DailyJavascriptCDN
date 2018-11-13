@@ -112,7 +112,7 @@ input[type="email"] {
   pointer-events: none;
 }
 
-.fail, .success {
+.failure, .success {
   -ms-flex-item-align: center;
   align-self: center;
   height: 8em;
@@ -129,7 +129,7 @@ input[type="email"] {
   transform: translate(0em, -4em);
 }
 
-.modal-header-text {
+#modal-header-text {
   font-family: Lato,'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight: 700;
   font-size: 4em;

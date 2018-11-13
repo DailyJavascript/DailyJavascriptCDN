@@ -60,11 +60,21 @@ if (!Array.prototype.forEach) {
 } // global variables
 
 
-var plan = ""; //
+var plan = "";
+var modalResponse = {
+  Failure: "Uh, oh!  Looks like there's an issue.  Please try again later.",
+  Success: "Thank you for joining Daily JavaScript!",
+  Loading: "Loading..."
+};
+var objectData = {
+  Failure: './img/fail_mark.svg',
+  Success: './img/success_checkmark.svg' //
+
+};
 
 function showModal(response) {
   Array.from(document.getElementsByClassName('fade')).forEach(function (element) {
-    if (element.id === response || element.classList.contains('modal-backdrop')) {
+    if (element.id === 'modal' || element.classList.contains('modal-backdrop')) {
       element.classList.add('show');
       element.style.display = 'block';
       element.removeAttribute('aria-hidden');
@@ -72,6 +82,12 @@ function showModal(response) {
       document.body.className = "modal-open";
     }
   });
+  document.getElementById('json-response').innerText = modalResponse[response];
+  document.getElementById('modal-header-text').innerHTML = response;
+  var obj = document.getElementById('modal-object');
+  obj.classList.add(response.toLowerCase());
+  obj.data = objectData[response];
+  document.getElementById("modal-img").src = objectData[response];
 }
 
 function hideModal() {
@@ -87,7 +103,7 @@ function hideModal() {
 }
 
 function toggleModal(response) {
-  document.getElementById(response).className.indexOf('show') > -1 ? hideModal() : showModal(response);
+  document.getElementById('modal').className.indexOf('show') > -1 ? hideModal() : showModal(response);
 }
 
 function addCustomErrorMessage(emailInput) {
@@ -162,10 +178,10 @@ function signUpFree(email) {
       if (response == "good") {
         // --- action for successful free signup
         // replace below code
-        toggleModal("success");
+        toggleModal("Success");
       } else if (response == "bad") {
         // --- action for failure of free signup
-        toggleModal("failure");
+        toggleModal("Failure");
       } // end if...else response
 
     } // end if (this.readyState == 4 && this.status == 200)
@@ -180,9 +196,9 @@ function signUpFree(email) {
 
 
 function createStripeSubscription(stripeToken) {
-  var xhttp = new XMLHttpRequest();
-  var currentTime = Date.now();
-  toggleModal('loading');
+  var xhttp = new XMLHttpRequest(); // let currentTime = Date.now();
+
+  toggleModal('Loading');
 
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -191,10 +207,10 @@ function createStripeSubscription(stripeToken) {
       if (response == "good") {
         // ---------  action for successful paid subscription
         // replace below code
-        toggleModal("success");
+        toggleModal("Success");
       } else if (response == "bad") {
         // --------- action for failure of paid subscription
-        toggleModal("failure");
+        toggleModal("Failure");
       } // end if...else response
 
     } // end if (this.readyState == 4 && this.status == 200)
