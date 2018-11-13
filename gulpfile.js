@@ -6,6 +6,13 @@ var rename = require("gulp-rename");
 var autoprefixer = require('gulp-autoprefixer');
 var pkg = require('./package.json');
 var browserSync = require('browser-sync').create();
+var babel = require("gulp-babel");
+
+gulp.task("test", function () {
+  return gulp.src("./js/index.js")
+    .pipe(babel())
+    .pipe(gulp.dest("dist"));
+});
 
 // Set the banner content
 var banner = ['/*!\n',
