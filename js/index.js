@@ -90,7 +90,7 @@ function updateModal(response){
   document.getElementById('modal-header-text').innerHTML = (response === "Loading") ? "Processing Signup" : response;
   if (response === "Loading") {
     document.getElementById('modal-header-text').classList.add('loading-text');
-  } 
+  }
 
   if (response !== "Loading" && document.getElementById('modal-header-text').classList.contains('loading-text')){
     document.getElementById('modal-header-text').classList.remove('loading-text');
@@ -102,8 +102,10 @@ function updateModal(response){
   Object.keys(btnClass).forEach((btn) => {
     if (btnClass[btn]) {
       document.getElementById('modal-btn').classList.add(btnClass[btn]);
-    } else{
-      document.getElementById('modal-btn').classList.remove(btn);
+    }
+
+    if (!btnClass[btn] && document.getElementById('modal-btn').classList.contains(btnClass[btn])) {
+      document.getElementById('modal-btn').classList.remove(btnClass[btn]);
     }
   })
 }

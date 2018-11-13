@@ -97,8 +97,10 @@ function updateModal(response) {
   Object.keys(btnClass).forEach(function (btn) {
     if (btnClass[btn]) {
       document.getElementById('modal-btn').classList.add(btnClass[btn]);
-    } else {
-      document.getElementById('modal-btn').classList.remove(btn);
+    }
+
+    if (!btnClass[btn] && document.getElementById('modal-btn').classList.contains(btnClass[btn])) {
+      document.getElementById('modal-btn').classList.remove(btnClass[btn]);
     }
   });
 }
