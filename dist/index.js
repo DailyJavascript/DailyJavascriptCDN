@@ -77,6 +77,16 @@ var btnClass = {
 
 };
 
+function updateModal(response) {
+  document.getElementById('json-response').innerText = modalResponse[response];
+  document.getElementById('modal-header-text').innerHTML = response;
+  var obj = document.getElementById('modal-object');
+  obj.classList.add(response.toLowerCase());
+  obj.data = objectData[response];
+  document.getElementById("modal-img").src = objectData[response];
+  document.getElementById('modal-btn').classList.add(btnClass[response]);
+}
+
 function showModal(response) {
   Array.from(document.getElementsByClassName('fade')).forEach(function (element) {
     if (element.id === 'modal' || element.classList.contains('modal-backdrop')) {
@@ -87,13 +97,7 @@ function showModal(response) {
       document.body.className = "modal-open";
     }
   });
-  document.getElementById('json-response').innerText = modalResponse[response];
-  document.getElementById('modal-header-text').innerHTML = response;
-  var obj = document.getElementById('modal-object');
-  obj.classList.add(response.toLowerCase());
-  obj.data = objectData[response];
-  document.getElementById("modal-img").src = objectData[response];
-  document.getElementById('modal-btn').classList.add(btnClass[response]);
+  updateModal(response);
 }
 
 function hideModal() {
@@ -109,7 +113,7 @@ function hideModal() {
 }
 
 function toggleModal(response) {
-  document.getElementById('modal').className.indexOf('show') > -1 ? hideModal() : showModal(response);
+  document.getElementById('modal').className.indexOf('show') > -1 ? updateModal(response) : showModal(response);
 }
 
 function addCustomErrorMessage(emailInput) {

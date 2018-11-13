@@ -84,6 +84,16 @@ let btnClass = {
 }
 
 //
+function updateModal(response){
+  document.getElementById('json-response').innerText = modalResponse[response];
+  document.getElementById('modal-header-text').innerHTML = response;
+  var obj = document.getElementById('modal-object');
+  obj.classList.add(response.toLowerCase());
+  obj.data = objectData[response];
+  document.getElementById("modal-img").src = objectData[response];
+  document.getElementById('modal-btn').classList.add(btnClass[response]);
+}
+
 function showModal(response) {
   Array.from(document.getElementsByClassName('fade')).forEach((element) => {
     if (element.id === 'modal' || element.classList.contains('modal-backdrop')) {
@@ -95,14 +105,9 @@ function showModal(response) {
     }
   })
 
-  document.getElementById('json-response').innerText = modalResponse[response];
-  document.getElementById('modal-header-text').innerHTML = response;
-  var obj = document.getElementById('modal-object');
-  obj.classList.add(response.toLowerCase());
-  obj.data = objectData[response];
-  document.getElementById("modal-img").src = objectData[response];
-  document.getElementById('modal-btn').classList.add(btnClass[response]);
+  updateModal(response)
 }
+
 
 function hideModal() {
   Array.from(document.getElementsByClassName('fade')).forEach((element) => {
@@ -120,7 +125,7 @@ function toggleModal(response) {
   document.getElementById('modal')
     .className
     .indexOf('show') > -1
-    ? hideModal()
+    ? updateModal(response)
     : showModal(response);
 }
 
