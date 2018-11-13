@@ -147,7 +147,6 @@ function makePreflightRequest(emailElement) {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText + "";
-        console.log(response);
         if (response == "proceed") signUpFree(emailElement.value);
         return true;
     } // end if (this.readyState == 4 && this.status == 200)
@@ -160,6 +159,7 @@ function makePreflightRequest(emailElement) {
 function signUpFree(email) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
+    toggleModal("loading");
     if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText + "";
         if (response == "good") {
@@ -179,18 +179,22 @@ function signUpFree(email) {
 
 function createStripeSubscription(stripeToken) {
   var xhttp = new XMLHttpRequest();
+  toggleModal("loading");
   xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        var response = this.responseText + "";
-        if (response == "good") {
-          // ---------  action for successful paid subscription
-          // replace below code
-          toggleModal("success");
-        } else if (response == "bad") {
-          // --------- action for failure of paid subscription
-          toggleModal("failure");
-        } // end if...else response
-    } // end if (this.readyState == 4 && this.status == 200)
+    if (this.readyState == 4) {
+      toggleModal("loading");
+      if (this.status == 200) {
+          var response = this.responseText + "";
+          if (response == "good") {
+            // ---------  action for successful paid subscription
+            // replace below code
+            toggleModal("success");
+          } else if (response == "bad") {
+            // --------- action for failure of paid subscription
+            toggleModal("failure");
+          } // end if...else response
+      } // end if (this.readyState == 4 && this.status == 200)
+    }
   } // end xhttp.onreadystatechange = function()
   xhttp.open("POST","https://dailyjavascript.herokuapp.com/users",true);
   xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -204,6 +208,7 @@ var handler = StripeCheckout.configure({
   zipCode: true,
   token: function(token) {
     createStripeSubscription(token);
+    console.log('banana')
   }
 }); // end var handler = StripeCheckout.configure({
 
