@@ -84,8 +84,10 @@ function updateModal(response) {
 
   if (response === "Loading") {
     document.getElementById('modal-header-text').classList.add('loading-text');
-  } else {
-    document.getElementById('modal-header-text').classList.remove('loading-test');
+  }
+
+  if (response !== "Loading" && document.getElementById('modal-header-text').classList.contains('loading-text')) {
+    document.getElementById('modal-header-text').classList.remove('loading-text');
   }
 
   var obj = document.getElementById('modal-object');
