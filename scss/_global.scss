@@ -107,7 +107,7 @@ input[type="email"] {
   pointer-events: none
 }
 
-.failure, .success {
+.failure, .success, .loading {
   align-self: center;
   height: 8em;
   transform: translate(0em, -4em);
@@ -134,4 +134,26 @@ input[type="email"] {
 
 .hidden {
   display: none;
+}
+
+.loading-text:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+/*   -webkit-animation: ellipsis steps(4,end) 900ms infinite;       */
+  animation: ellipsis steps(4,end) 900ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1em;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1em;
+  }
 }

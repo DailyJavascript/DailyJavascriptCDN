@@ -8,7 +8,7 @@ var pkg = require('./package.json');
 var browserSync = require('browser-sync').create();
 var babel = require("gulp-babel");
 
-gulp.task("test", function () {
+gulp.task("babelfy", function () {
   return gulp.src("./js/index.js")
     .pipe(babel())
     .pipe(gulp.dest("dist"));

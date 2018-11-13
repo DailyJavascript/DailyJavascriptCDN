@@ -69,12 +69,13 @@ let plan = "";
 let modalResponse = {
   Failure: "Uh, oh!  Looks like there's an issue.  Please try again later.",
   Success: "Thank you for joining Daily JavaScript!",
-  Loading: "Loading..."
+  Loading: ""
 }
 
 let objectData = {
   Failure: './img/fail_mark.svg',
-  Success: './img/success_checkmark.svg'
+  Success: './img/success_checkmark.svg',
+  Loading: './img/loading.svg'
 }
 
 let btnClass = {
@@ -86,13 +87,23 @@ let btnClass = {
 //
 function updateModal(response){
   document.getElementById('json-response').innerText = modalResponse[response];
-  document.getElementById('modal-header-text').innerHTML = response;
+  document.getElementById('modal-header-text').innerHTML = (response === "Loading") ? "Processing Signup" : response;
+  if (response === "Loading") {
+    document.getElementById('modal-header-text').classList.add('loading-text');
+  } else {
+    document.getElementById('modal-header-text').classList.remove('loading-test');
+  }
   var obj = document.getElementById('modal-object');
   obj.classList.add(response.toLowerCase());
   obj.data = objectData[response];
   document.getElementById("modal-img").src = objectData[response];
-  document.getElementById('modal-btn').classList.add(btnClass[response]);
-  document.getElementById('modal-btn').classList.remove("hidden");
+  Object.keys(btnClass).forEach((btn) => {
+    if (btnClass[btn]) {
+      document.getElementById('modal-btn').classList.add(btnClass[btn]);
+    } else{
+      document.getElementById('modal-btn').classList.remove(btn);
+    }
+  })
 }
 
 function showModal(response) {
