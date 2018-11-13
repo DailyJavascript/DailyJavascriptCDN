@@ -1,24 +1,69 @@
 "use strict";
 
-function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+// forEacH polyfill
+// Production steps of ECMA-262, Edition 5, 15.4.4.18
+// Reference: http://es5.github.io/#x15.4.4.18
+if (!Array.prototype.forEach) {
+  Array.prototype.forEach = function (callback
+  /*, thisArg*/
+  ) {
+    var T, k;
 
-function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+    if (this == null) {
+      throw new TypeError('this is null or not defined');
+    } // 1. Let O be the result of calling toObject() passing the
+    // |this| value as the argument.
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+    var O = Object(this); // 2. Let lenValue be the result of calling the Get() internal
+    // method of O with the argument "length".
+    // 3. Let len be toUint32(lenValue).
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+    var len = O.length >>> 0; // 4. If isCallable(callback) is false, throw a TypeError exception. 
+    // See: http://es5.github.com/#x9.11
 
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+    if (typeof callback !== 'function') {
+      throw new TypeError(callback + ' is not a function');
+    } // 5. If thisArg was supplied, let T be thisArg; else let
+    // T be undefined.
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-// global variables
+    if (arguments.length > 1) {
+      T = arguments[1];
+    } // 6. Let k be 0.
+
+
+    k = 0; // 7. Repeat while k < len.
+
+    while (k < len) {
+      var kValue; // a. Let Pk be ToString(k).
+      //    This is implicit for LHS operands of the in operator.
+      // b. Let kPresent be the result of calling the HasProperty
+      //    internal method of O with argument Pk.
+      //    This step can be combined with c.
+      // c. If kPresent is true, then
+
+      if (k in O) {
+        // i. Let kValue be the result of calling the Get internal
+        // method of O with argument Pk.
+        kValue = O[k]; // ii. Call the Call internal method of callback with T as
+        // the this value and argument list containing kValue, k, and O.
+
+        callback.call(T, kValue, k, O);
+      } // d. Increase k by 1.
+
+
+      k++;
+    } // 8. return undefined.
+
+  };
+} // global variables
+
+
 var plan = ""; //
 
 function showModal(response) {
-  _construct(Array, _toConsumableArray(document.getElementsByClassName('fade'))).forEach(function (element) {
+  Array.from(document.getElementsByClassName('fade')).forEach(function (element) {
     if (element.id === response || element.classList.contains('modal-backdrop')) {
       element.classList.add('show');
       element.style.display = 'block';
@@ -30,7 +75,7 @@ function showModal(response) {
 }
 
 function hideModal() {
-  _construct(Array, _toConsumableArray(document.getElementsByClassName('fade'))).forEach(function (element) {
+  Array.from(document.getElementsByClassName('fade')).forEach(function (element) {
     if (element.classList.contains('show')) {
       element.classList.remove('show');
       element.style.display = 'none';
@@ -67,7 +112,7 @@ function maybeAddErrorStyling(emailInput) {
 } //get html collection of input elements and convert into an array
 
 
-_construct(Array, _toConsumableArray(document.getElementsByTagName('input'))).forEach(function (emailInput) {
+Array.from(document.getElementsByTagName('input')).forEach(function (emailInput) {
   emailInput.addEventListener("input", function () {
     addCustomErrorMessage(emailInput);
     maybeAddErrorStyling(emailInput);
