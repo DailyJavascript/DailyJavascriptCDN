@@ -68,7 +68,12 @@ var modalResponse = {
 };
 var objectData = {
   Failure: './img/fail_mark.svg',
-  Success: './img/success_checkmark.svg' //
+  Success: './img/success_checkmark.svg'
+};
+var btnClass = {
+  Failure: 'btn-danger',
+  Success: 'btn-success',
+  Loading: 'hidden' //
 
 };
 
@@ -88,6 +93,7 @@ function showModal(response) {
   obj.classList.add(response.toLowerCase());
   obj.data = objectData[response];
   document.getElementById("modal-img").src = objectData[response];
+  document.getElementById('modal-btn').classList.add(btnClass[response]);
 }
 
 function hideModal() {
