@@ -317,53 +317,20 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
           <object id="modal-object" type="image/svg+xml">
-              <img id="modal-img" src="./img/fail_mark.svg">
+              <img id="modal-img">
           </object>
         <div class="modal-body">
           <h1 id="modal-header-text" class="text-center"></h1>
           <div id="json-response"></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-lg btn-block btn-danger" data-dismiss="modal" aria-label="Close" onclick="hideModal()">
+          <button id="modal-btn" type="button" class="btn btn-lg btn-block" data-dismiss="modal" aria-label="Close" onclick="hideModal()">
             Close
           </button>
         </div>
       </div>
     </div>
   </div>
-  <div id="success" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <object class="success" type="image/svg+xml" data="./img/success_checkmark.svg">
-                <img src="./img/success_checkmark.svg">
-            </object>
-          <div class="modal-body">
-            <h1 class="modal-header-text text-center">Success</h1>
-            <div class="json-response">Thank you for joining Daily JavaScript!</div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-lg btn-block btn-success" data-dismiss="modal" aria-label="Close" onclick="hideModal()">
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="loading" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-            <h1 class="modal-header-text text-center">Loading</h1>
-            <div class="json-response">Please wait...</div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-lg btn-block btn-success" data-dismiss="modal" aria-label="Close" onclick="hideModal()">
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 </body>
 
 </html>

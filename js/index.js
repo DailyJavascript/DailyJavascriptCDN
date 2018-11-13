@@ -77,6 +77,12 @@ let objectData = {
   Success: './img/success_checkmark.svg'
 }
 
+let btnClass = {
+  Failure: 'btn-danger',
+  Success: 'btn-success',
+  Loading: 'hidden'
+}
+
 //
 function showModal(response) {
   Array.from(document.getElementsByClassName('fade')).forEach((element) => {
@@ -95,6 +101,7 @@ function showModal(response) {
   obj.classList.add(response.toLowerCase());
   obj.data = objectData[response];
   document.getElementById("modal-img").src = objectData[response];
+  document.getElementById('modal-btn').classList.add(btnClass[response]);
 }
 
 function hideModal() {
