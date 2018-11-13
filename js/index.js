@@ -80,7 +80,7 @@ let objectData = {
 let btnClass = {
   Failure: 'btn-danger',
   Success: 'btn-success',
-  Loading: 'hidden'
+  Loading: 'btn-black'
 }
 
 //
