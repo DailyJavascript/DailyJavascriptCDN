@@ -313,15 +313,15 @@
   <!-- <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
   <div class="modal-backdrop fade hidden"></div>
-  <div id="failure" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+  <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-          <object class="fail" type="image/svg+xml" data="./img/fail_mark.svg">
-              <img src="./img/fail_mark.svg">
+          <object id="modal-object" type="image/svg+xml">
+              <img id="modal-img" src="./img/fail_mark.svg">
           </object>
         <div class="modal-body">
-          <h1 class="modal-header-text text-center">Failure</h1>
-          <div class="json-response">Uh, oh!  Looks like there's an issue.  Please try again later.</div>
+          <h1 id="modal-header-text" class="text-center"></h1>
+          <div id="json-response"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-lg btn-block btn-danger" data-dismiss="modal" aria-label="Close" onclick="hideModal()">
@@ -353,7 +353,8 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">
-            <h1 class="modal-header-text text-center">Loading...</h1>
+            <h1 class="modal-header-text text-center">Loading</h1>
+            <div class="json-response">Please wait...</div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-lg btn-block btn-success" data-dismiss="modal" aria-label="Close" onclick="hideModal()">
