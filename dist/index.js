@@ -156,8 +156,6 @@ function signUpFree(email) {
   var xhttp = new XMLHttpRequest();
 
   xhttp.onreadystatechange = function () {
-    toggleModal("loading");
-
     if (this.readyState == 4 && this.status == 200) {
       var response = this.responseText + "";
 
@@ -183,27 +181,32 @@ function signUpFree(email) {
 
 function createStripeSubscription(stripeToken) {
   var xhttp = new XMLHttpRequest();
-  toggleModal("loading");
+  var currentTime = Date.now();
+  toggleModal('loading');
 
   xhttp.onreadystatechange = function () {
-    if (this.readyState == 4) {
-      toggleModal("loading");
+    if (this.readyState == 4 && this.status == 200) {
+      if (Date.now() - currentTime < 1000) {
+        setTimeout(function () {
+          toggleModal('loading');
+        }, Date.now() - currentTime);
+      } else {
+        toggleModal('loading');
+      }
 
-      if (this.status == 200) {
-        var response = this.responseText + "";
+      var response = this.responseText + "";
 
-        if (response == "good") {
-          // ---------  action for successful paid subscription
-          // replace below code
-          toggleModal("success");
-        } else if (response == "bad") {
-          // --------- action for failure of paid subscription
-          toggleModal("failure");
-        } // end if...else response
+      if (response == "good") {
+        // ---------  action for successful paid subscription
+        // replace below code
+        toggleModal("success");
+      } else if (response == "bad") {
+        // --------- action for failure of paid subscription
+        toggleModal("failure");
+      } // end if...else response
 
-      } // end if (this.readyState == 4 && this.status == 200)
+    } // end if (this.readyState == 4 && this.status == 200)
 
-    }
   }; // end xhttp.onreadystatechange = function()
 
 
@@ -220,7 +223,6 @@ var handler = StripeCheckout.configure({
   zipCode: true,
   token: function token(_token) {
     createStripeSubscription(_token);
-    console.log('banana');
   }
 }); // end var handler = StripeCheckout.configure({
 
