@@ -62,7 +62,7 @@
                 <span class="icon"></span>
             </div>
             <div class="col-12 col-md-3">
-              <button type="submit" class="btn btn-lg btn-outline-light cta-button" onclick="preflight(event, 'email1');">Sign up for free!</button>
+              <button type="submit" class="btn btn-lg btn-outline-light cta-button" onclick="preflight(event, 'email1', 'free', null);">Sign up for free!</button>
             </div>
           </div>
         </form>
@@ -205,7 +205,7 @@
               </li>
             </ul>
             <div class="price"><sup>$</sup><span>8</span><span class="period">per month</span></div>
-            <button type="submit" class="btn btn-block btn-md btn-primary mt-9" onclick="signUpEightDollars();">Get Standard Account</button>
+            <button type="submit" class="btn btn-block btn-md btn-primary mt-9" onclick="openStripePopup('$8');">Get Standard Account</button>
           </div>
         </div>
         <div class="col-lg-4">
@@ -238,7 +238,7 @@
               </li>
             </ul>
             <div class="price"><sup>$</sup><span>10</span><span class="period">per month</span></div>
-            <button type="submit" class="btn btn-block btn-md btn-primary mt-9" onclick="signUpTenDollars();">Get Premium Account</button>
+            <button type="submit" class="btn btn-block btn-md btn-primary mt-9" onclick="openStripePopup('$10');">Get Premium Account</button>
           </div>
         </div>
       </div>
@@ -260,7 +260,7 @@
             <span class="icon"></span>
           </div>
           <div class="col-12 col-md-3">
-            <button type="submit" class="btn btn-lg btn-outline-dark cta-button" onclick="preflight(event, 'email2');">Sign up for free!</button>
+            <button type="submit" class="btn btn-lg btn-outline-dark cta-button" onclick="preflight(event, 'email2', 'free', null);">Sign up for free!</button>
           </div>
         </div>
       </form>

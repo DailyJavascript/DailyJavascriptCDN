@@ -267,23 +267,26 @@ Array.from(document.getElementsByTagName('input')).forEach(
 )
 
 
-function preflight(event, emailInputID) {
-  var emailElement = document.getElementById(emailInputID);
-  if (!emailElement.value || !emailElement.checkValidity()) {
-    return;
+function preflight(event, emailInputID, membershipLevel, stripeToken) {
+  var emailElement = null;
+  if (!!emailInputID) {
+    emailElement = document.getElementById(emailInputID);
+    if (!emailElement.value || !emailElement.checkValidity()) {
+      return;
+    }
   }
   //prevent page from reloading
-  event.preventDefault();
+  if (!!event) event.preventDefault();
   //send request
-  makePreflightRequest(emailElement);
-} // end function preflight(event, emailInputID)
+  makePreflightRequest(emailElement, membershipLevel, stripeToken);
+} // end function preflight(event, emailInputID, membershipLevel)
 
-function makePreflightRequest(emailElement) {
+function makePreflightRequest(emailElement, membershipLevel, stripeToken) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText + "";
-        if (response == "proceed") signUpFree(emailElement.value);
+        if (response == "proceed") signUp(emailElement, membershipLevel, stripeToken);
         return true;
     } // end if (this.readyState == 4 && this.status == 200)
   } // end xhttp.onreadystatechange = function()
@@ -292,48 +295,54 @@ function makePreflightRequest(emailElement) {
   return false;
 } // end function makePreflightRequest(emailElement)
 
-function signUpFree(email) {
+function signUp(emailElement, membershipLevel, stripeToken) {
+  var data = null;
+  if (membershipLevel == "free") data = "email="+emailElement.value+"&membership_level=free&membership_code=1";
+  else if (membershipLevel == "paid") data = "email=" + stripeToken.email + "&membership_level=" + plan + "&membership_code=2&stripe_token_id=" + stripeToken.id;
+
   var xhttp = new XMLHttpRequest();
   toggleModal('Loading');
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText + "";
         if (response == "good") {
-          // --- action for successful free signup
+          // --- action for successful signup
           // replace below code
           toggleModal("Success");
         } else if (response == "bad") {
-          // --- action for failure of free signup
+          // --- action for failure of signup
           toggleModal("Failure");
         } // end if...else response
     } // end if (this.readyState == 4 && this.status == 200)
   } // end xhttp.onreadystatechange = function()
   xhttp.open("POST","https://dailyjavascript.herokuapp.com/users",true);
   xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xhttp.send("email="+email+"&membership_level=free&membership_code=1");
+  xhttp.send(data);
 } // end function SignUpFree(emailInput)
 
-function createStripeSubscription(stripeToken) {
-  var xhttp = new XMLHttpRequest();
-  // let currentTime = Date.now();
-  toggleModal('Loading');
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        var response = this.responseText + "";
-        if (response == "good") {
-          // ---------  action for successful paid subscription
-          // replace below code
-          toggleModal("Success");
-        } else if (response == "bad") {
-          // --------- action for failure of paid subscription
-          toggleModal("Failure");
-        } // end if...else response
-    } // end if (this.readyState == 4 && this.status == 200)
-  } // end xhttp.onreadystatechange = function()
-  xhttp.open("POST","https://dailyjavascript.herokuapp.com/users",true);
-  xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xhttp.send("email=" + stripeToken.email + "&membership_level=" + plan + "&membership_code=2&stripe_token_id=" + stripeToken.id);
-} // end function createStripeSubscription(stripeToken)
+function openStripePopup(membershipLevel) {
+  var descript = null;
+  if (membershipLevel == "$8") { 
+    plan = "eight_dollars";
+    descript = "Daily JavaScript $8 Membership";
+    amt = 800;
+  } else if (membershipLevel == "$10") { 
+    plan = "ten_dollars";
+    descript = "Daily JavaScript $10 Membership";
+    amt = 1000;
+  }
+  handler.open({
+    image: '/img/js.png',
+    name: 'Daily JavaScript',
+    description: descript,
+    amount: amt,
+    panelLabel: 'Pay {{amount}}'
+  });
+} // end function openStripePopup(membershipLevel)
+
+
+
+// ------ Below this line are code from Stripe, above this line is our own code -----------
 
 var handler = StripeCheckout.configure({
   key: 'pk_test_ZMMqCmUQPkC2QjqkA6ZknBg7',
@@ -341,32 +350,10 @@ var handler = StripeCheckout.configure({
   locale: 'auto',
   zipCode: true,
   token: function(token) {
-    createStripeSubscription(token);
+    preflight(null, null, "paid", token);
   }
 }); // end var handler = StripeCheckout.configure({
 
 window.addEventListener("popstate", function(event) {
   handler.close();
 });
-
-function signUpEightDollars() {
-  plan = "eight_dollars";
-  handler.open({
-    image: '/img/js.png',
-    name: 'Daily JavaScript',
-    description: 'Daily JavaScript $8 Membership',
-    amount: 800,
-    panelLabel: 'Pay {{amount}}'
-  });
-} // end function signUpEightDollars()
-
-function signUpTenDollars() {
-  plan = "ten_dollars";
-  handler.open({
-    image: '/img/js.png',
-    name: 'Daily JavaScript',
-    description: 'Daily JavaScript $10 Membership',
-    amount: 1000,
-    panelLabel: 'Pay {{amount}}'
-  });
-} // end function signUpTenDollars()
