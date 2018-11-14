@@ -86,28 +86,13 @@ let btnClass = {
 
 //
 function updateModal(response){
+  console.log(response, 'apple')
   document.getElementById('json-response').innerText = modalResponse[response];
   document.getElementById('modal-header-text').innerHTML = (response === "Loading") ? "Processing Signup" : response;
-  if (response === "Loading") {
-    document.getElementById('modal-header-text').classList.add('loading-text');
-  }
-
-  if (response !== "Loading" && document.getElementById('modal-header-text').classList.contains('loading-text')){
-    document.getElementById('modal-header-text').classList.remove('loading-text');
-  }
   var obj = document.getElementById('modal-object');
   obj.classList.add(response.toLowerCase());
   obj.data = objectData[response];
   document.getElementById("modal-img").src = objectData[response];
-  Object.keys(btnClass).forEach((btn) => {
-    if (btnClass[btn]) {
-      document.getElementById('modal-btn').classList.add(btnClass[btn]);
-    }
-
-    if (!btnClass[btn] && document.getElementById('modal-btn').classList.contains(btnClass[btn])) {
-      document.getElementById('modal-btn').classList.remove(btnClass[btn]);
-    }
-  })
 }
 
 function showModal(response) {
@@ -138,6 +123,7 @@ function hideModal() {
 }
 
 function toggleModal(response) {
+  console.log(response)
   document.getElementById('modal')
     .className
     .indexOf('show') > -1
