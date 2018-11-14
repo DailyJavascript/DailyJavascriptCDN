@@ -145,7 +145,7 @@ input[type="email"] {
   display: none;
 }
 
-.loading-text:after {
+.loading-elipsis:after {
   overflow: hidden;
   display: inline-block;
   vertical-align: bottom;
