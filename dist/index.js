@@ -137,7 +137,19 @@ function hideModal() {
 }
 
 function toggleModal(response) {
-  document.getElementById('modal').className.indexOf('show') > -1 ? updateModal(response) : showModal(response);
+  var currentTime = Date.now();
+
+  if (document.getElementById('modal').className.indexOf('show') > -1) {
+    if (Date.now() - currentTime < 1000) {
+      setTimeout(function () {
+        updateModal(response);
+      }, 1000);
+    } else {
+      updateModal(response);
+    }
+  } else {
+    showModal(response);
+  }
 }
 
 function addCustomErrorMessage(emailInput) {
@@ -204,6 +216,7 @@ function makePreflightRequest(emailElement) {
 
 function signUpFree(email) {
   var xhttp = new XMLHttpRequest();
+  toggleModal('Loading');
 
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
