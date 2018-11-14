@@ -86,24 +86,13 @@ let btnClass = {
 
 //
 function updateModal(response){
+  console.log(response, 'apple')
   document.getElementById('json-response').innerText = modalResponse[response];
   document.getElementById('modal-header-text').innerHTML = (response === "Loading") ? "Processing Signup" : response;
-  if (response === "Loading") {
-    document.getElementById('modal-header-text').classList.add('loading-text');
-  } else {
-    document.getElementById('modal-header-text').classList.remove('loading-test');
-  }
   var obj = document.getElementById('modal-object');
   obj.classList.add(response.toLowerCase());
   obj.data = objectData[response];
   document.getElementById("modal-img").src = objectData[response];
-  Object.keys(btnClass).forEach((btn) => {
-    if (btnClass[btn]) {
-      document.getElementById('modal-btn').classList.add(btnClass[btn]);
-    } else{
-      document.getElementById('modal-btn').classList.remove(btn);
-    }
-  })
 }
 
 function showModal(response) {
@@ -134,6 +123,7 @@ function hideModal() {
 }
 
 function toggleModal(response) {
+  console.log(response)
   document.getElementById('modal')
     .className
     .indexOf('show') > -1
