@@ -89,6 +89,7 @@ function updateModal(response) {
 }
 
 function showModal(response) {
+  console.log(response, 'banana');
   Array.from(document.getElementsByClassName('fade')).forEach(function (element) {
     if (element.id === 'modal' || element.classList.contains('modal-backdrop')) {
       element.classList.add('show');
