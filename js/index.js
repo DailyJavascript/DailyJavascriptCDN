@@ -321,7 +321,7 @@ function signUp(emailElement, membershipLevel, stripeToken) {
 } // end function SignUpFree(emailInput)
 
 function openStripePopup(membershipLevel) {
-  var descript = null;
+  var descript = null, amt = null;
   if (membershipLevel == "$8") { 
     plan = "eight_dollars";
     descript = "Daily JavaScript $8 Membership";
