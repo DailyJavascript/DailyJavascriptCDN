@@ -145,11 +145,16 @@ function hideModal() {
 }
 
 function toggleModal(response) {
-  document.getElementById('modal')
-    .className
-    .indexOf('show') > -1
-    ? updateModal(response)
-    : showModal(response);
+  let currentTime = Date.now();
+  if (document.getElementById('modal').className.indexOf('show') > -1) {
+    if (Date.now() - currentTime < 1000) {
+      setTimeout(()=> { updateModal(response) }, 1000)
+    } else {
+      updateModal(response);
+    }
+  } else {
+    showModal(response);
+  }
 }
 
 function addCustomErrorMessage(emailInput){
@@ -210,6 +215,7 @@ function makePreflightRequest(emailElement) {
 
 function signUpFree(email) {
   var xhttp = new XMLHttpRequest();
+  toggleModal('Loading');
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText + "";
