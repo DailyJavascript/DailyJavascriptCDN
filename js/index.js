@@ -84,19 +84,40 @@ let btnClass = {
   Loading: 'hidden'
 }
 
+function addModalHeader(response) {
+  document.getElementById('modal-header-text').innerHTML = (response === "Loading") ? "Processing Signup" : response;
+}
+
+function maybeAddLoadingElipsis(response){
+  if (response === "Loading" && !document.getElementById('modal-header-text').classList.contains('loading-elipsis')) {
+    document.getElementById('modal-header-text').classList.add('loading-elipsis')
+  }
+
+  if (response !== "Loading" && document.getElementById('modal-header-text').classList.contains('loading-elipsis')){
+    document.getElementById('modal-header-text').classList.remove('loading-elipsis')
+  }
+}
+
+function addButtonCSS(response) {
+  document.getElementById('modal-btn').classList.add(btnClass[response]);
+  if (response !== "Loading"){
+    document.getElementById('modal-btn').classList.remove('hidden');
+  }
+}
+
 //
 function updateModal(response){
-  console.log(response, 'apple')
   document.getElementById('json-response').innerText = modalResponse[response];
-  document.getElementById('modal-header-text').innerHTML = (response === "Loading") ? "Processing Signup" : response;
+  addModalHeader(response);
+  maybeAddLoadingElipsis(response);
   var obj = document.getElementById('modal-object');
   obj.classList.add(response.toLowerCase());
   obj.data = objectData[response];
   document.getElementById("modal-img").src = objectData[response];
+  addButtonCSS(response);
 }
 
 function showModal(response) {
-  console.log(response, 'banana')
   Array.from(document.getElementsByClassName('fade')).forEach((element) => {
     if (element.id === 'modal' || element.classList.contains('modal-backdrop')) {
       element.classList.add('show');
@@ -124,7 +145,6 @@ function hideModal() {
 }
 
 function toggleModal(response) {
-  console.log(response)
   document.getElementById('modal')
     .className
     .indexOf('show') > -1
