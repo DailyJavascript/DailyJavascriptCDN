@@ -152,9 +152,9 @@ let modalResponse = {
 }
 
 let objectData = {
-  Failure: './img/fail_mark.svg',
-  Success: './img/success_checkmark.svg',
-  Loading: './img/loading.svg'
+  Failure: '/img/fail_mark.svg',
+  Success: '/img/success_checkmark.svg',
+  Loading: '/img/loading.svg'
 }
 
 let btnClass = {

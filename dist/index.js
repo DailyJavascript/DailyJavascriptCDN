@@ -160,9 +160,9 @@ var modalResponse = {
   Loading: ""
 };
 var objectData = {
-  Failure: './img/fail_mark.svg',
-  Success: './img/success_checkmark.svg',
-  Loading: './img/loading.svg'
+  Failure: '/img/fail_mark.svg',
+  Success: '/img/success_checkmark.svg',
+  Loading: '/img/loading.svg'
 };
 var btnClass = {
   Failure: 'btn-danger',
