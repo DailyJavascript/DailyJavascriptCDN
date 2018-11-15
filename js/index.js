@@ -163,22 +163,6 @@ let btnClass = {
   Loading: 'hidden'
 }
 
-// let imgs = [];
-
-// function preloadImages() {
-//   Object.keys(objectData).forEach((key) => {
-//     let img = document.createElement('img');
-//     img.src = objectData[key];
-//     img.dataset.name = key;
-//     imgs.push(img);
-//   })
-// }
-
-// document.onload = (e) => {
-//   preloadImages();
-// }
-
-
 function addModalHeader(response) {
   document.getElementById('modal-header-text').innerHTML = (response === "Loading") ? "Processing Signup" : response;
 }
@@ -205,13 +189,12 @@ function updateModal(response){
   document.getElementById('json-response').innerText = modalResponse[response];
   addModalHeader(response);
   maybeAddLoadingElipsis(response);
-  var obj = document.getElementById('modal-object');
+  var img = document.getElementById('modal-img');
   if (response !== "loading") {
-    obj.classList.remove('loading');
+    img.classList.remove('loading');
   }
-  obj.classList.add(response.toLowerCase());
-  obj.src = objectData[response];
-  // document.getElementById("modal-img").src = objectData[response];
+  img.classList.add(response.toLowerCase());
+  img.src = objectData[response];
   addButtonCSS(response);
 }
 
@@ -240,6 +223,8 @@ function hideModal() {
       document.body.className=""
     }
   })
+
+  document.getElementById('modal-object').src = "";
 }
 
 function toggleModal(response) {
