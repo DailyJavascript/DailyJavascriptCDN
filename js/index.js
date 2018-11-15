@@ -278,6 +278,7 @@ function preflight(event, emailInputID, membershipLevel, stripeToken) {
   //prevent page from reloading
   if (!!event) event.preventDefault();
   //send request
+  toggleModal('Loading');
   makePreflightRequest(emailElement, membershipLevel, stripeToken);
 } // end function preflight(event, emailInputID, membershipLevel)
 
@@ -301,7 +302,6 @@ function signUp(emailElement, membershipLevel, stripeToken) {
   else if (membershipLevel == "paid") data = "email=" + stripeToken.email + "&membership_level=" + plan + "&membership_code=2&stripe_token_id=" + stripeToken.id;
 
   var xhttp = new XMLHttpRequest();
-  toggleModal('Loading');
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText + "";
@@ -322,11 +322,11 @@ function signUp(emailElement, membershipLevel, stripeToken) {
 
 function openStripePopup(membershipLevel) {
   var descript = null, amt = null;
-  if (membershipLevel == "$8") { 
+  if (membershipLevel == "$8") {
     plan = "eight_dollars";
     descript = "Daily JavaScript $8 Membership";
     amt = 800;
-  } else if (membershipLevel == "$10") { 
+  } else if (membershipLevel == "$10") {
     plan = "ten_dollars";
     descript = "Daily JavaScript $10 Membership";
     amt = 1000;
