@@ -224,7 +224,7 @@ function hideModal() {
     }
   })
 
-  document.getElementById('modal-object').src = "";
+  document.getElementById('modal-img').src = "";
 }
 
 function toggleModal(response) {
