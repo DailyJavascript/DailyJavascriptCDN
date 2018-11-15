@@ -190,7 +190,9 @@ function updateModal(response){
   addModalHeader(response);
   maybeAddLoadingElipsis(response);
   var obj = document.getElementById('modal-object');
-  obj.classList.remove('loading');
+  if (response !== "loading") {
+    obj.classList.remove('loading');
+  }
   obj.classList.add(response.toLowerCase());
   obj.data = objectData[response];
   document.getElementById("modal-img").src = objectData[response];
