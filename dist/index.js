@@ -167,7 +167,19 @@ var objectData = {
 var btnClass = {
   Failure: 'btn-danger',
   Success: 'btn-success',
-  Loading: 'hidden'
+  Loading: 'hidden' // let imgs = [];
+  // function preloadImages() {
+  //   Object.keys(objectData).forEach((key) => {
+  //     let img = document.createElement('img');
+  //     img.src = objectData[key];
+  //     img.dataset.name = key;
+  //     imgs.push(img);
+  //   })
+  // }
+  // document.onload = (e) => {
+  //   preloadImages();
+  // }
+
 };
 
 function addModalHeader(response) {
@@ -204,8 +216,8 @@ function updateModal(response) {
   }
 
   obj.classList.add(response.toLowerCase());
-  obj.data = objectData[response];
-  document.getElementById("modal-img").src = objectData[response];
+  obj.src = objectData[response]; // document.getElementById("modal-img").src = objectData[response];
+
   addButtonCSS(response);
 }
 
