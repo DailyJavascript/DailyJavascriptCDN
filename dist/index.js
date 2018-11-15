@@ -288,6 +288,7 @@ function preflight(event, emailInputID, membershipLevel, stripeToken) {
 
   if (!!event) event.preventDefault(); //send request
 
+  toggleModal('Loading');
   makePreflightRequest(emailElement, membershipLevel, stripeToken);
 } // end function preflight(event, emailInputID, membershipLevel)
 
@@ -315,7 +316,6 @@ function signUp(emailElement, membershipLevel, stripeToken) {
   var data = null;
   if (membershipLevel == "free") data = "email=" + emailElement.value + "&membership_level=free&membership_code=1";else if (membershipLevel == "paid") data = "email=" + stripeToken.email + "&membership_level=" + plan + "&membership_code=2&stripe_token_id=" + stripeToken.id;
   var xhttp = new XMLHttpRequest();
-  toggleModal('Loading');
 
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
