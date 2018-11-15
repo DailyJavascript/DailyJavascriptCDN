@@ -145,6 +145,7 @@ if (!Array.from) {
 
 // global variables
 let plan = "";
+let svgs = [];
 let modalResponse = {
   Failure: "Uh, oh!  Looks like there's an issue.  Please try again later.",
   Success: "Thank you for joining Daily JavaScript!",
@@ -152,9 +153,9 @@ let modalResponse = {
 }
 
 let objectData = {
-  Failure: './img/fail_mark.svg',
-  Success: './img/success_checkmark.svg',
-  Loading: './img/loading.svg'
+  Failure: '/img/fail_mark.svg',
+  Success: '/img/success_checkmark.svg',
+  Loading: '/img/loading.svg'
 }
 
 let btnClass = {
@@ -190,9 +191,7 @@ function updateModal(response){
   addModalHeader(response);
   maybeAddLoadingElipsis(response);
   var obj = document.getElementById('modal-object');
-  if (response !== "loading") {
-    obj.classList.remove('loading');
-  }
+  obj.classList.remove('loading');
   obj.classList.add(response.toLowerCase());
   obj.data = objectData[response];
   document.getElementById("modal-img").src = objectData[response];

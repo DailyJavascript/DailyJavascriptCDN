@@ -154,15 +154,16 @@ if (!Array.from) {
 
 
 var plan = "";
+var svgs = [];
 var modalResponse = {
   Failure: "Uh, oh!  Looks like there's an issue.  Please try again later.",
   Success: "Thank you for joining Daily JavaScript!",
   Loading: ""
 };
 var objectData = {
-  Failure: './img/fail_mark.svg',
-  Success: './img/success_checkmark.svg',
-  Loading: './img/loading.svg'
+  Failure: '/img/fail_mark.svg',
+  Success: '/img/success_checkmark.svg',
+  Loading: '/img/loading.svg'
 };
 var btnClass = {
   Failure: 'btn-danger',
@@ -198,11 +199,7 @@ function updateModal(response) {
   addModalHeader(response);
   maybeAddLoadingElipsis(response);
   var obj = document.getElementById('modal-object');
-
-  if (response !== "loading") {
-    obj.classList.remove('loading');
-  }
-
+  obj.classList.remove('loading');
   obj.classList.add(response.toLowerCase());
   obj.data = objectData[response];
   document.getElementById("modal-img").src = objectData[response];
