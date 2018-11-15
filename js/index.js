@@ -163,6 +163,22 @@ let btnClass = {
   Loading: 'hidden'
 }
 
+// let imgs = [];
+
+// function preloadImages() {
+//   Object.keys(objectData).forEach((key) => {
+//     let img = document.createElement('img');
+//     img.src = objectData[key];
+//     img.dataset.name = key;
+//     imgs.push(img);
+//   })
+// }
+
+// document.onload = (e) => {
+//   preloadImages();
+// }
+
+
 function addModalHeader(response) {
   document.getElementById('modal-header-text').innerHTML = (response === "Loading") ? "Processing Signup" : response;
 }
@@ -194,8 +210,8 @@ function updateModal(response){
     obj.classList.remove('loading');
   }
   obj.classList.add(response.toLowerCase());
-  obj.data = objectData[response];
-  document.getElementById("modal-img").src = objectData[response];
+  obj.src = objectData[response];
+  // document.getElementById("modal-img").src = objectData[response];
   addButtonCSS(response);
 }
 
