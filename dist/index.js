@@ -231,7 +231,7 @@ function hideModal() {
       document.body.className = "";
     }
   });
-  document.getElementById('modal-object').src = "";
+  document.getElementById('modal-img').src = "";
 }
 
 function toggleModal(response) {
