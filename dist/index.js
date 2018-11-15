@@ -154,7 +154,6 @@ if (!Array.from) {
 
 
 var plan = "";
-var svgs = [];
 var modalResponse = {
   Failure: "Uh, oh!  Looks like there's an issue.  Please try again later.",
   Success: "Thank you for joining Daily JavaScript!",

@@ -145,7 +145,6 @@ if (!Array.from) {
 
 // global variables
 let plan = "";
-let svgs = [];
 let modalResponse = {
   Failure: "Uh, oh!  Looks like there's an issue.  Please try again later.",
   Success: "Thank you for joining Daily JavaScript!",
