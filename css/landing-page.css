@@ -206,6 +206,41 @@ header.masthead h1 {
   }
 }
 
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  header.masthead {
+    background: url("../img/array-functions-2-xx-large.jpg") no-repeat center center;
+    background-size: cover;
+  }
+}
+
+@media screen and (min-width: 801px) and (max-width: 1024px) {
+  header.masthead {
+    background: url("../img/array-functions-2-x-large.jpg") no-repeat center center;
+    background-size: cover;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 800px) {
+  header.masthead {
+    background: url("../img/array-functions-2-large.jpg") no-repeat center center;
+    background-size: cover;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 640px) {
+  header.masthead {
+    background: url("../img/array-functions-2-medium.jpg") no-repeat center center;
+    background-size: cover;
+  }
+}
+
+@media screen and (min-width: 0px) and (max-width: 320px) {
+  header.masthead {
+    background: url("../img/array-functions-2-small.jpg") no-repeat center center;
+    background-size: cover;
+  }
+}
+
 .showcase .showcase-text {
   padding: 3rem;
 }
