@@ -28,4 +28,28 @@ header.masthead {
   @media (max-width: 500px) {
     padding-top: 3rem;
   }
+
+  @media screen and (min-width: 1025px) and (max-width: 1280px) {
+    background: url('../img/array-functions-2-xx-large.jpg') no-repeat center center;
+    @include background-cover;
+  }
+
+  @media screen and (min-width: 801px) and (max-width: 1024px) {
+    background: url('../img/array-functions-2-x-large.jpg') no-repeat center center;
+    @include background-cover;
+  }
+  @media screen and (min-width: 641px) and (max-width: 800px) {
+    background: url('../img/array-functions-2-large.jpg') no-repeat center center;
+    @include background-cover;
+  }
+  @media screen and (min-width: 321px) and (max-width: 640px) {
+    background: url('../img/array-functions-2-medium.jpg') no-repeat center center;
+    @include background-cover;
+  }
+  @media screen and (min-width: 0px) and (max-width: 320px) {
+    background: url('../img/array-functions-2-small.jpg')no-repeat center center;
+    @include background-cover;
+  }
+
 }
+
