@@ -349,7 +349,7 @@ function openStripePopup(membershipLevel) {
 // ------ Below this line are code from Stripe, above this line is our own code -----------
 
 var handler = StripeCheckout.configure({
-  key: 'pk_test_ZMMqCmUQPkC2QjqkA6ZknBg7',
+  key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
   image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
   locale: 'auto',
   zipCode: true,
