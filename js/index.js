@@ -207,10 +207,22 @@ const parseLocalStorageJSON = (item) => {
   }
 };
 
+function getUrlParams() {
+  var vars = {};
+  window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function() {
+    //the arguments passed in will always be the same
+    vars[arguments[1]] = arguments[2];
+  });
+  return vars;
+}
+
 // --- refcode functions
 function getRefCode(){
-  //if we need something more robust then i'll update this to be more robust
-  return window.location.search.replace('?', '');
+  if(getUrlParams()['refcode']){
+    return "refcode="+ getUrlParams()['refcode'];
+  } else {
+    return ""
+  }
 }
 
 function postRefCode() {
