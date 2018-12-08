@@ -391,10 +391,17 @@ function makePreflightRequest(emailElement, membershipLevel, stripeToken) {
 
 function signUp(emailElement, membershipLevel, stripeToken) {
   var data = null;
-  if (membershipLevel == "free") data = "email=" + emailElement.value + "&membership_level=free&membership_code=1";else if (membershipLevel == "paid") data = "email=" + stripeToken.email + "&membership_level=" + plan + "&membership_code=2&stripe_token_id=" + stripeToken.id;
+
+  if (membershipLevel == "free") {
+    data = "email=" + emailElement.value + "&membership_level=free&membership_code=1";
+  }
+
+  if (membershipLevel == "paid") {
+    data = "email=" + stripeToken.email + "&membership_level=" + plan + "&membership_code=2&stripe_token_id=" + stripeToken.id;
+  }
 
   if (!!parseLocalStorageJSON('userID')) {
-    data + '&userID=' + parseLocalStorageJSON('userID');
+    data = data + '&userID=' + parseLocalStorageJSON('userID');
   }
 
   var xhttp = new XMLHttpRequest();
@@ -463,7 +470,7 @@ window.addEventListener("popstate", function (event) {
   handler.close();
 });
 window.addEventListener('load', function () {
-  if (getRefCode() && localStorageSupported()) {
+  if (getRefCode() && !parseLocalStorageJSON('userID')) {
     postRefCode(getRefCode());
   }
 });
