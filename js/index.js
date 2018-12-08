@@ -226,7 +226,7 @@ function postRefCode() {
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.onreadystatechange = function () { // Call a function when the state changes.
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      storeInLocalStorage('userID', xhr.response);
+      storeInLocalStorage('visitID', xhr.response);
     }
   }
   xhr.send(refcode);
@@ -376,8 +376,8 @@ function signUp(emailElement, membershipLevel, stripeToken) {
     data = "email=" + stripeToken.email + "&membership_level=" + plan + "&membership_code=2&stripe_token_id=" + stripeToken.id;
   }
 
-  if (!!parseLocalStorageJSON('userID')) {
-    data = data + '&userID=' + parseLocalStorageJSON('userID');
+  if (!!parseLocalStorageJSON('visitID')) {
+    data = data + '&visitID=' + parseLocalStorageJSON('visitID');
   }
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -435,7 +435,7 @@ window.addEventListener("popstate", function(event) {
 });
 
 window.addEventListener('load', function() {
-  if (getRefCode() && !parseLocalStorageJSON('userID')){
+  if (getRefCode() && !parseLocalStorageJSON('visitID')){
     postRefCode(getRefCode());
   }
 });
