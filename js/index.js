@@ -377,7 +377,7 @@ function signUp(emailElement, membershipLevel, stripeToken) {
   }
 
   if (!!parseLocalStorageJSON('userID')) {
-    data + '&userID=' + parseLocalStorageJSON('userID');
+    data = data + '&userID=' + parseLocalStorageJSON('userID');
   }
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -435,7 +435,7 @@ window.addEventListener("popstate", function(event) {
 });
 
 window.addEventListener('load', function() {
-  if (getRefCode() && localStorageSupported()){
+  if (getRefCode() && !parseLocalStorageJSON('userID')){
     postRefCode(getRefCode());
   }
 });
