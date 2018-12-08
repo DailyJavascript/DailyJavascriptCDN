@@ -150,7 +150,7 @@ if (!Array.from) {
       return A;
     };
   }();
-} // global variables
+} // ------ global variables
 
 
 var plan = "";
@@ -167,12 +167,80 @@ var objectData = {
 var btnClass = {
   Failure: 'btn-danger',
   Success: 'btn-success',
-  Loading: 'hidden'
+  Loading: 'hidden' // --------- local storage functions
+
 };
+
+var localStorageSupported = function localStorageSupported() {
+  try {
+    var key = "testLocalStorage";
+    window.localStorage.setItem(key, key);
+    window.localStorage.removeItem(key);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+var storeInLocalStorage = function storeInLocalStorage(key, value) {
+  var jsonValue = JSON.stringify(value);
+
+  if (localStorageSupported()) {
+    try {
+      window.localStorage.setItem(key, jsonValue);
+    } catch (e) {
+      return;
+    }
+  }
+};
+
+var clearFromLocalStorage = function clearFromLocalStorage(key) {
+  if (localStorageSupported()) {
+    try {
+      window.localStorage.removeItem(key);
+    } catch (e) {
+      return;
+    }
+  }
+}; //item is a string that is the key stored in the browser's local storage
+
+
+var parseLocalStorageJSON = function parseLocalStorageJSON(item) {
+  if (localStorageSupported()) {
+    try {
+      return JSON.parse(window.localStorage.getItem(item));
+    } catch (e) {
+      return false;
+    }
+  }
+}; // --- refcode functions
+
 
 function getRefCode() {
   //if we need something more robust then i'll update this to be more robust
   return window.location.search.replace('?', '');
+}
+
+function postRefCode() {
+  var xhr = new XMLHttpRequest();
+  var refcode = getRefCode();
+
+  if (!xhr) {
+    return false;
+  }
+
+  xhr.open("POST", 'https://dailyjavascript.herokuapp.com/users/visit', true); //Send the proper header information along with the request
+
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  xhr.onreadystatechange = function () {
+    // Call a function when the state changes.
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      storeInLocalStorage('userID', xhr.response);
+    }
+  };
+
+  xhr.send(refcode);
 }
 
 function addModalHeader(response) {
@@ -195,8 +263,7 @@ function addButtonCSS(response) {
   if (response !== "Loading") {
     document.getElementById('modal-btn').classList.remove('hidden');
   }
-} //
-
+}
 
 function updateModal(response) {
   document.getElementById('json-response').innerText = modalResponse[response];
@@ -325,6 +392,11 @@ function makePreflightRequest(emailElement, membershipLevel, stripeToken) {
 function signUp(emailElement, membershipLevel, stripeToken) {
   var data = null;
   if (membershipLevel == "free") data = "email=" + emailElement.value + "&membership_level=free&membership_code=1";else if (membershipLevel == "paid") data = "email=" + stripeToken.email + "&membership_level=" + plan + "&membership_code=2&stripe_token_id=" + stripeToken.id;
+
+  if (!!parseLocalStorageJSON('userID')) {
+    data + '&userID=' + parseLocalStorageJSON('userID');
+  }
+
   var xhttp = new XMLHttpRequest();
 
   xhttp.onreadystatechange = function () {
@@ -373,29 +445,7 @@ function openStripePopup(membershipLevel) {
     panelLabel: 'Pay {{amount}}'
   });
 } // end function openStripePopup(membershipLevel)
-
-
-function postRefCode() {
-  var xhr = new XMLHttpRequest();
-  var refcode = getRefCode();
-
-  if (!xhr) {
-    return false;
-  }
-
-  xhr.open("POST", 'https://dailyjavascript.herokuapp.com/users/visit', true); //Send the proper header information along with the request
-
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-  xhr.onreadystatechange = function () {
-    // Call a function when the state changes.
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      console.log(xhr.response);
-    }
-  };
-
-  xhr.send(refcode);
-} // ------ Below this line are code from Stripe, above this line is our own code -----------
+// ------ Below this line are code from Stripe, above this line is our own code -----------
 
 
 var handler = StripeCheckout.configure({
@@ -407,12 +457,13 @@ var handler = StripeCheckout.configure({
     preflight(null, null, "paid", _token);
   }
 }); // end var handler = StripeCheckout.configure({
+// ----- event listeners
 
 window.addEventListener("popstate", function (event) {
   handler.close();
 });
 window.addEventListener('load', function () {
-  if (getRefCode()) {
-    console.log('apple');
+  if (getRefCode() && localStorageSupported()) {
+    postRefCode(getRefCode());
   }
 });
