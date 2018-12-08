@@ -470,7 +470,7 @@ window.addEventListener("popstate", function (event) {
   handler.close();
 });
 window.addEventListener('load', function () {
-  if (getRefCode() && !parseLocalStorageJSON('visitID')) {
+  if (!parseLocalStorageJSON('visitID')) {
     postRefCode(getRefCode());
   }
 });
