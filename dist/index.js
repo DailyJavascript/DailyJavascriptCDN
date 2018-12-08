@@ -170,6 +170,11 @@ var btnClass = {
   Loading: 'hidden'
 };
 
+function getRefCode() {
+  //if we need something more robust then i'll update this to be more robust
+  return window.location.search.replace('?', '');
+}
+
 function addModalHeader(response) {
   document.getElementById('modal-header-text').innerHTML = response === "Loading" ? "Processing Signup" : response;
 }
@@ -368,7 +373,29 @@ function openStripePopup(membershipLevel) {
     panelLabel: 'Pay {{amount}}'
   });
 } // end function openStripePopup(membershipLevel)
-// ------ Below this line are code from Stripe, above this line is our own code -----------
+
+
+function postRefCode() {
+  var xhr = new XMLHttpRequest();
+  var refcode = getRefCode();
+
+  if (!xhr) {
+    return false;
+  }
+
+  xhr.open("POST", 'https://dailyjavascript.herokuapp.com/users/visit', true); //Send the proper header information along with the request
+
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  xhr.onreadystatechange = function () {
+    // Call a function when the state changes.
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      console.log(xhr.response);
+    }
+  };
+
+  xhr.send(refcode);
+} // ------ Below this line are code from Stripe, above this line is our own code -----------
 
 
 var handler = StripeCheckout.configure({
@@ -383,4 +410,9 @@ var handler = StripeCheckout.configure({
 
 window.addEventListener("popstate", function (event) {
   handler.close();
+});
+window.addEventListener('load', function () {
+  if (getRefCode()) {
+    console.log('apple');
+  }
 });
