@@ -252,7 +252,7 @@ function postRefCode() {
     }
   };
 
-  xhr.send(refcode);
+  xhr.send("blogVisit=0&" + refcode);
 }
 
 function addModalHeader(response) {

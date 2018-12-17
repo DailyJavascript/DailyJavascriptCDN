@@ -241,7 +241,7 @@ function postRefCode() {
       storeInLocalStorage('visitID', xhr.response);
     }
   }
-  xhr.send(refcode);
+  xhr.send("blogVisit=0&"+refcode);
 }
 
 function addModalHeader(response) {
