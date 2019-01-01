@@ -79,6 +79,8 @@ function postRefCode() {
 
 if (!parseLocalStorageJSON('visitID')) {
   postRefCode();
+} else {
+  window.visitID = parseLocalStorageJSON('visitID');
 }
 
 function UserActivity() {
