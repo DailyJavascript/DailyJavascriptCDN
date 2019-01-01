@@ -163,6 +163,57 @@ let btnClass = {
   Loading: 'hidden'
 }
 
+const UserActivitySectionFlags = {
+  instructions: 0,
+  testimonials: 0,
+  payment: 0
+}
+
+function Activity(fieldName, value) {
+  return {
+    fieldName: fieldName,
+    value: value,
+    visitID: window.visitID || parseLocalStorageJSON('visitID')
+  }
+}
+// `field=${didScroll}&value=${}`
+
+var captureUserActivity = function(e, plan=null) {
+  if (e.target.type === "email") {
+    UserActivity.add(new Activity('didInputEmail', true));
+    UserActivity.add(new Activity('emailInputValue', e.target.value));
+    UserActivity.maybePostActivity();
+  }
+
+  if (e.target.type === "submit") {
+    UserActivity.add(new Activity('didClickPayment', true));
+    UserActivity.add(new Activity('plan', plan));
+    UserActivity.maybePostActivity();
+  }
+}
+
+var options = {
+  root: null,
+  rootMargin: '0px',
+  threshold: [0]
+}
+
+var callback = function(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && window.UserActivity && !UserActivitySectionFlags[entry.target.id]) {
+      UserActivity.add(new Activity('sectionID', entry.target.id));
+      UserActivitySectionFlags[entry.target.id] = 1;
+    }
+  });
+};
+
+var observer = new IntersectionObserver(callback, options);
+
+["instructions", "payment", 'testimonials'].forEach( (id) => {
+  var target = document.getElementById(id);
+  observer.observe(target);
+})
+
 // --------- local storage functions
 const localStorageSupported = () => {
   try {
@@ -233,12 +284,14 @@ function postRefCode() {
     return false;
   }
 
-  xhr.open("POST", 'https://dailyjavascript.herokuapp.com/users/visit', true);
+  xhr.open("POST", 'https://dailyjavascript.herokuapp.com/visits', true);
   //Send the proper header information along with the request
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.onreadystatechange = function () { // Call a function when the state changes.
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       storeInLocalStorage('visitID', xhr.response);
+      window.visitID = xhr.response;
+      UserActivity.maybePostActivity();
     }
   }
   xhr.send("blogVisit=0&"+refcode);
@@ -410,12 +463,14 @@ function signUp(emailElement, membershipLevel, stripeToken) {
   xhttp.send(data);
 } // end function SignUpFree(emailInput)
 
-function openStripePopup(membershipLevel) {
+function openStripePopup(membershipLevel, e) {
+  captureUserActivity(e, membershipLevel);
   var descript = null, amt = null;
   if (membershipLevel == "$8") {
     plan = "eight_dollars";
     descript = "Daily JavaScript $8 Membership";
     amt = 800;
+
   } else if (membershipLevel == "$10") {
     plan = "ten_dollars";
     descript = "Daily JavaScript $10 Membership";
@@ -447,7 +502,9 @@ window.addEventListener("popstate", function(event) {
 });
 
 window.addEventListener('load', function() {
-  if (!parseLocalStorageJSON('visitID')){
-    postRefCode(getRefCode());
-  }
+  window.addEventListener('scroll', function() {
+    UserActivity.add(new Activity('didScroll', true));
+    UserActivity.maybePostActivity();
+  }, { once: true});
 });
+

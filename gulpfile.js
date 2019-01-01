@@ -9,7 +9,7 @@ var browserSync = require('browser-sync').create();
 var babel = require("gulp-babel");
 
 gulp.task("babelfy", function () {
-  return gulp.src("./js/index.js")
+  return gulp.src(["./js/index.js", "./js/localStorage.js"])
     .pipe(babel())
     .pipe(gulp.dest("dist"));
 });

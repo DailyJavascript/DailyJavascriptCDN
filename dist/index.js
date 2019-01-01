@@ -167,9 +167,59 @@ var objectData = {
 var btnClass = {
   Failure: 'btn-danger',
   Success: 'btn-success',
-  Loading: 'hidden' // --------- local storage functions
-
+  Loading: 'hidden'
 };
+var UserActivitySectionFlags = {
+  instructions: 0,
+  testimonials: 0,
+  payment: 0
+};
+
+function Activity(fieldName, value) {
+  return {
+    fieldName: fieldName,
+    value: value,
+    visitID: window.visitID || parseLocalStorageJSON('visitID')
+  };
+} // `field=${didScroll}&value=${}`
+
+
+var captureUserActivity = function captureUserActivity(e) {
+  var plan = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+  if (e.target.type === "email") {
+    UserActivity.add(new Activity('didInputEmail', true));
+    UserActivity.add(new Activity('emailInputValue', e.target.value));
+    UserActivity.maybePostActivity();
+  }
+
+  if (e.target.type === "submit") {
+    UserActivity.add(new Activity('didClickPayment', true));
+    UserActivity.add(new Activity('plan', plan));
+    UserActivity.maybePostActivity();
+  }
+};
+
+var options = {
+  root: null,
+  rootMargin: '0px',
+  threshold: [0]
+};
+
+var callback = function callback(entries) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting && window.UserActivity && !UserActivitySectionFlags[entry.target.id]) {
+      UserActivity.add(new Activity('sectionID', entry.target.id));
+      UserActivitySectionFlags[entry.target.id] = 1;
+    }
+  });
+};
+
+var observer = new IntersectionObserver(callback, options);
+["instructions", "payment", 'testimonials'].forEach(function (id) {
+  var target = document.getElementById(id);
+  observer.observe(target);
+}); // --------- local storage functions
 
 var localStorageSupported = function localStorageSupported() {
   try {
@@ -241,7 +291,7 @@ function postRefCode() {
     return false;
   }
 
-  xhr.open("POST", 'https://dailyjavascript.herokuapp.com/users/visit', true); //Send the proper header information along with the request
+  xhr.open("POST", 'https://dailyjavascript.herokuapp.com/visits', true); //Send the proper header information along with the request
 
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
@@ -249,6 +299,8 @@ function postRefCode() {
     // Call a function when the state changes.
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       storeInLocalStorage('visitID', xhr.response);
+      window.visitID = xhr.response;
+      UserActivity.maybePostActivity();
     }
   };
 
@@ -442,7 +494,8 @@ function signUp(emailElement, membershipLevel, stripeToken) {
 } // end function SignUpFree(emailInput)
 
 
-function openStripePopup(membershipLevel) {
+function openStripePopup(membershipLevel, e) {
+  captureUserActivity(e, membershipLevel);
   var descript = null,
       amt = null;
 
@@ -482,7 +535,10 @@ window.addEventListener("popstate", function (event) {
   handler.close();
 });
 window.addEventListener('load', function () {
-  if (!parseLocalStorageJSON('visitID')) {
-    postRefCode(getRefCode());
-  }
+  window.addEventListener('scroll', function () {
+    UserActivity.add(new Activity('didScroll', true));
+    UserActivity.maybePostActivity();
+  }, {
+    once: true
+  });
 });
