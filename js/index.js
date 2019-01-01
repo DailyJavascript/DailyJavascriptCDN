@@ -481,10 +481,3 @@ window.addEventListener("popstate", function(event) {
   handler.close();
 });
 
-window.addEventListener('load', function() {
-  window.addEventListener('scroll', function() {
-    UserActivity.add(new Activity('didScroll', true));
-    UserActivity.maybePostActivity();
-  }, { once: true});
-});
-

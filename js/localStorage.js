@@ -96,7 +96,7 @@ function UserActivity() {
    }
    xhr.open("POST", 'https://dailyjavascript.herokuapp.com/visits/update', true);
    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-   let params = `field=${fieldName}&value=${value}&vistID=${visitID}`;
+   let params = `field=${fieldName}&value=${value}&visitID=${visitID}`;
    xhr.send(params);
  };
   this.maybePostActivity = function(){
