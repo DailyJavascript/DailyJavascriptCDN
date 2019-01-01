@@ -105,7 +105,7 @@ function UserActivity() {
       return false;
     }
 
-    xhr.open("POST", 'http://localhost:3000/visits/update', true);
+    xhr.open("POST", 'https://dailyjavascript.herokuapp.com/visits/update', true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     var params = "field=".concat(fieldName, "&value=").concat(value, "&vistID=").concat(visitID);
     xhr.send(params);

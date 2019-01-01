@@ -190,14 +190,14 @@ var captureUserActivity = function captureUserActivity(e) {
   if (e.target.type === "email") {
     UserActivity.add(new Activity('didInputEmail', true));
     UserActivity.add(new Activity('emailInputValue', e.target.value));
-    UserActivity.maybePostActivity();
   }
 
   if (e.target.type === "submit") {
     UserActivity.add(new Activity('didClickPayment', true));
     UserActivity.add(new Activity('plan', plan));
-    UserActivity.maybePostActivity();
   }
+
+  UserActivity.maybePostActivity();
 };
 
 var options = {
@@ -211,6 +211,7 @@ var callback = function callback(entries) {
     if (entry.isIntersecting && window.UserActivity && !UserActivitySectionFlags[entry.target.id]) {
       UserActivity.add(new Activity('sectionID', entry.target.id));
       UserActivitySectionFlags[entry.target.id] = 1;
+      UserActivity.maybePostActivity();
     }
   });
 };
