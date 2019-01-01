@@ -113,7 +113,7 @@ function UserActivity() {
 
   this.maybePostActivity = function () {
     if (window.visitID) {
-      while (this.size > 0) {
+      while (this.size() > 0) {
         var activity = this.remove();
         this.postUserActivity(activity.fieldName, activity.value, activity.visitID);
       }

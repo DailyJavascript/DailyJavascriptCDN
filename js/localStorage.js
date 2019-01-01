@@ -88,6 +88,7 @@ function UserActivity() {
   this.size = function() {
      return this.queue.length;
   };
+
   this.postUserActivity = function(fieldName, value, visitID) {
    const xhr = new XMLHttpRequest();
    if (!xhr) {
@@ -100,7 +101,7 @@ function UserActivity() {
  };
   this.maybePostActivity = function(){
     if (window.visitID){
-      while (this.size > 0) {
+      while (this.size() > 0) {
        let activity = this.remove();
        this.postUserActivity(activity.fieldName, activity.value, activity.visitID);
       }
