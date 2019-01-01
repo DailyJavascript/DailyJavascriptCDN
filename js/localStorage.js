@@ -64,13 +64,16 @@ function postRefCode() {
   xhr.onreadystatechange = function () { // Call a function when the state changes.
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       storeInLocalStorage('visitID', xhr.response);
-      UserActivity.visitID = xhr.response;
+      window.visitID = xhr.response;
+      UserActivity.maybePostActivity();
     }
   }
   xhr.send("blogVisit=0&"+refcode);
 }
 
-postRefCode();
+if (!parseLocalStorageJSON('visitID')){
+  postRefCode();
+}
 
 function UserActivity() {
   this.queue = [];

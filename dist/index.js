@@ -283,30 +283,6 @@ function getRefCode() {
   }
 }
 
-function postRefCode() {
-  var xhr = new XMLHttpRequest();
-  var refcode = getRefCode();
-
-  if (!xhr) {
-    return false;
-  }
-
-  xhr.open("POST", 'https://dailyjavascript.herokuapp.com/visits', true); //Send the proper header information along with the request
-
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-  xhr.onreadystatechange = function () {
-    // Call a function when the state changes.
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      storeInLocalStorage('visitID', xhr.response);
-      window.visitID = xhr.response;
-      UserActivity.maybePostActivity();
-    }
-  };
-
-  xhr.send("blogVisit=0&" + refcode);
-}
-
 function addModalHeader(response) {
   document.getElementById('modal-header-text').innerHTML = response === "Loading" ? "Processing Signup" : response;
 }
