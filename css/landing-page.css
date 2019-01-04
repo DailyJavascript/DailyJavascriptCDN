@@ -135,10 +135,15 @@ input[type="email"] {
   font-size: 4em;
 }
 
-.json-response {
+#json-response {
   font-family: Lato,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight: 300;
-  font-size: 1.5em;
+  font-weight: 500;
+  font-size: 1.35rem;
+  text-align: justify;
+}
+
+div#cta-social {
+  margin-left: 1rem;
 }
 
 .hidden {

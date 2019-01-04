@@ -156,7 +156,7 @@ if (!Array.from) {
 var plan = "";
 var modalResponse = {
   Failure: "Uh, oh!  Looks like there's an issue.  Please try again later.",
-  Success: "Thank you for joining Daily JavaScript!",
+  Success: "You'll be sent a confirmation email shortly. Thank you for joining Daily JavaScript!",
   Loading: ""
 };
 var objectData = {
@@ -309,6 +309,15 @@ function addButtonCSS(response) {
 function updateModal(response) {
   document.getElementById('json-response').innerText = modalResponse[response];
   addModalHeader(response);
+
+  if (response === "Success") {
+    document.getElementById('cta-social').style.display = 'inline-block';
+  } else {
+    if (document.getElementById('cta-social').style.display === 'inline-block') {
+      document.getElementById('cta-social').style.display = "none";
+    }
+  }
+
   maybeAddLoadingElipsis(response);
   var img = document.getElementById('modal-img');
 
