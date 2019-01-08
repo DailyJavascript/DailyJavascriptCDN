@@ -174,7 +174,8 @@ var UserActivitySectionFlags = {
   testimonials: 0,
   payment: 0,
   sample_of_paid_features: 0,
-  sample_question: 0
+  sample_question: 0,
+  didClickTestPage: 0
 };
 
 function Activity(fieldName, value) {
@@ -199,8 +200,9 @@ var captureUserActivity = function captureUserActivity(e) {
     UserActivity.add(new Activity('plan', plan));
   }
 
-  if (e.target.type === "mousedown") {
+  if (e.type === "mouseover" && !UserActivitySectionFlags['didClickTestPage']) {
     UserActivity.add(new Activity('didClickTestPage', true));
+    UserActivitySectionFlags.didClickTestPage = 1;
   }
 
   UserActivity.maybePostActivity();
