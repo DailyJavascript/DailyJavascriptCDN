@@ -192,7 +192,7 @@ var captureUserActivity = function(e, plan=null) {
   }
 
   if (e.target.type === "mousedown"){
-    UserActivity.add(new Activity('testPage', 1));
+    UserActivity.add(new Activity('didClickTestPage', true));
   }
 
   UserActivity.maybePostActivity();
