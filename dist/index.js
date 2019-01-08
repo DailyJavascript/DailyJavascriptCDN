@@ -172,7 +172,9 @@ var btnClass = {
 var UserActivitySectionFlags = {
   instructions: 0,
   testimonials: 0,
-  payment: 0
+  payment: 0,
+  sample_of_paid_features: 0,
+  sample_question: 0
 };
 
 function Activity(fieldName, value) {
@@ -197,6 +199,10 @@ var captureUserActivity = function captureUserActivity(e) {
     UserActivity.add(new Activity('plan', plan));
   }
 
+  if (e.target.type === "mousedown") {
+    UserActivity.add(new Activity('testPage', 1));
+  }
+
   UserActivity.maybePostActivity();
 };
 
@@ -217,7 +223,7 @@ var callback = function callback(entries) {
 };
 
 var observer = new IntersectionObserver(callback, options);
-["instructions", "payment", 'testimonials'].forEach(function (id) {
+["instructions", "payment", 'testimonials', "sample_of_paid_features", "sample_question"].forEach(function (id) {
   var target = document.getElementById(id);
   observer.observe(target);
 }); // --------- local storage functions
