@@ -166,7 +166,9 @@ let btnClass = {
 const UserActivitySectionFlags = {
   instructions: 0,
   testimonials: 0,
-  payment: 0
+  payment: 0,
+  sample_of_paid_features: 0,
+  sample_question: 0
 }
 
 function Activity(fieldName, value) {
@@ -187,6 +189,10 @@ var captureUserActivity = function(e, plan=null) {
   if (e.target.type === "submit") {
     UserActivity.add(new Activity('didClickPayment', true));
     UserActivity.add(new Activity('plan', plan));
+  }
+
+  if (e.target.type === "mousedown"){
+    UserActivity.add(new Activity('testPage', 1));
   }
 
   UserActivity.maybePostActivity();
@@ -210,7 +216,7 @@ var callback = function(entries) {
 
 var observer = new IntersectionObserver(callback, options);
 
-["instructions", "payment", 'testimonials'].forEach( (id) => {
+["instructions", "payment", 'testimonials', "sample_of_paid_features", "sample_question"].forEach( (id) => {
   var target = document.getElementById(id);
   observer.observe(target);
 })
