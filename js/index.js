@@ -499,7 +499,7 @@ window.addEventListener("popstate", function(event) {
 window.addEventListener('load', function(){
   if (getUrlParams()['refcode'] === "ecf85b5bebb743ceb675"){
     UserActivity.add(new Activity('didClickUpgradeLink', true));
-    UserActivi.maybePostActivity();
+    UserActivity.maybePostActivity();
   }
 });
 
