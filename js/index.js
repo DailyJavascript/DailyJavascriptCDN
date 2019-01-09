@@ -461,14 +461,14 @@ function signUp(emailElement, membershipLevel, stripeToken) {
 function openStripePopup(membershipLevel, e) {
   captureUserActivity(e, membershipLevel);
   var descript = null, amt = null;
-  if (membershipLevel == "$8") {
-    plan = "eight_dollars";
-    descript = "Daily JavaScript $8 Membership";
+  if (membershipLevel == "standard") {
+    plan = "standard";
+    descript = "Daily JavaScript standard Membership";
     amt = 800;
 
-  } else if (membershipLevel == "$10") {
-    plan = "ten_dollars";
-    descript = "Daily JavaScript $10 Membership";
+  } else if (membershipLevel == "premium") {
+    plan = "premium";
+    descript = "Daily JavaScript premium Membership";
     amt = 1000;
   }
   handler.open({
