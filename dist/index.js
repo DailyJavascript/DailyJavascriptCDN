@@ -548,7 +548,7 @@ window.addEventListener('DOMContentLoaded', function () {
     "amazon": "img/amazon2.svg",
     "groupon": "img/groupon.svg",
     "ford": "img/ford.svg",
-    "testing-suite": "img/testing-suite-2.png"
+    "testing-suite": "img/testing-suite-3.png"
   };
   var imgCollection = Array.prototype.slice.call(document.getElementsByTagName('img'));
   imgCollection.forEach(function (img) {
