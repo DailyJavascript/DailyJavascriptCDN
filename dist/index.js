@@ -222,13 +222,8 @@ var callback = function callback(entries) {
       UserActivity.maybePostActivity();
     }
   });
-};
+}; // --------- local storage functions
 
-var observer = new IntersectionObserver(callback, options);
-["instructions", "payment", 'testimonials', "sample_of_paid_features", "sample_question"].forEach(function (id) {
-  var target = document.getElementById(id);
-  observer.observe(target);
-}); // --------- local storage functions
 
 var localStorageSupported = function localStorageSupported() {
   try {
@@ -512,23 +507,16 @@ function openStripePopup(membershipLevel, e) {
   });
 } // end function openStripePopup(membershipLevel)
 // ------ Below this line are code from Stripe, above this line is our own code -----------
-
-
-var handler = StripeCheckout.configure({
-  key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
-  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-  locale: 'auto',
-  zipCode: true,
-  token: function token(_token) {
-    preflight(null, null, "paid", _token);
-  }
-}); // end var handler = StripeCheckout.configure({
 // ----- event listeners
 
-window.addEventListener("popstate", function (event) {
-  handler.close();
-});
+
 window.addEventListener('load', function () {
+  var observer = new IntersectionObserver(callback, options);
+  ["instructions", "payment", 'testimonials', "sample_of_paid_features", "sample_question"].forEach(function (id) {
+    var target = document.getElementById(id);
+    observer.observe(target);
+  });
+
   if (getUrlParams()['refcode'] === "ecf85b5bebb743ceb675") {
     UserActivity.add(new Activity('didClickUpgradeLink', true));
     UserActivity.maybePostActivity();
@@ -555,5 +543,18 @@ window.addEventListener('load', function () {
     if (img.dataset.img) {
       img.src = imgSrc[img.dataset.img];
     }
+  });
+  var handler = StripeCheckout.configure({
+    key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
+    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+    locale: 'auto',
+    zipCode: true,
+    token: function token(_token) {
+      preflight(null, null, "paid", _token);
+    }
+  }); // end var handler = StripeCheckout.configure({
+
+  window.addEventListener("popstate", function (event) {
+    handler.close();
   });
 });
