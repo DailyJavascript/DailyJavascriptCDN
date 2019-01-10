@@ -193,21 +193,21 @@ var lazyLoad = function lazyLoad() {
       img.src = imgSrc[img.dataset.img];
     }
   });
-  var handler = StripeCheckout.configure({
-    key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
-    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-    locale: 'auto',
-    zipCode: true,
-    token: function token(_token) {
-      preflight(null, null, "paid", _token);
-    }
-  }); // end var handler = StripeCheckout.configure({
-
-  window.addEventListener("popstate", function (event) {
-    handler.close();
-  });
 };
 
+var handler = StripeCheckout.configure({
+  key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
+  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+  locale: 'auto',
+  zipCode: true,
+  token: function token(_token) {
+    preflight(null, null, "paid", _token);
+  }
+}); // end var handler = StripeCheckout.configure({
+
+window.addEventListener("popstate", function (event) {
+  handler.close();
+});
 var UserActivitySectionFlags = {
   instructions: 0,
   testimonials: 0,
