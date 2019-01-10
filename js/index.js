@@ -163,6 +163,47 @@ let btnClass = {
   Loading: 'hidden'
 }
 
+const lazyLoad = () => {
+  let lazyLoadedIframe = document.getElementById('iframe-video-lazy');
+  lazyLoadedIframe.src = "https://www.youtube.com/embed/6fud8HA-wP4";
+  lazyLoadedIframe.width = "440";
+  lazyLoadedIframe.height = "315";
+  lazyLoadedIframe.frameborder  = 0;
+  lazyLoadedIframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+  lazyLoadedIframe.allowfullscreen = true;
+
+  const imgSrc = {
+    "calendar": "img/calendar.svg",
+    "blackboard": "img/blackboard.svg",
+    "online-class": "img/online-class.svg",
+    "amazon": "img/amazon2.svg",
+    "groupon": "img/groupon.svg",
+    "ford": "img/ford.svg",
+    "testing-suite": "img/testing-suite-3.png",
+  }
+
+  let imgCollection = Array.prototype.slice.call(document.getElementsByTagName('img'));
+  imgCollection.forEach((img) => {
+    if (img.dataset.img){
+      img.src = imgSrc[img.dataset.img];
+    }
+  });
+
+  var handler = StripeCheckout.configure({
+    key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
+    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+    locale: 'auto',
+    zipCode: true,
+    token: function(token) {
+      preflight(null, null, "paid", token);
+    }
+  }); // end var handler = StripeCheckout.configure({
+
+  window.addEventListener("popstate", function(event) {
+    handler.close();
+  });
+}
+
 const UserActivitySectionFlags = {
   instructions: 0,
   testimonials: 0,
@@ -489,43 +530,8 @@ window.addEventListener('load', function(){
     UserActivity.maybePostActivity();
   }
 
-  let lazyLoadedIframe = document.getElementById('iframe-video-lazy');
-  lazyLoadedIframe.src = "https://www.youtube.com/embed/6fud8HA-wP4";
-  lazyLoadedIframe.width = "440";
-  lazyLoadedIframe.height = "315";
-  lazyLoadedIframe.frameborder  = 0;
-  lazyLoadedIframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
-  lazyLoadedIframe.allowfullscreen = true;
-
-  const imgSrc = {
-    "calendar": "img/calendar.svg",
-    "blackboard": "img/blackboard.svg",
-    "online-class": "img/online-class.svg",
-    "amazon": "img/amazon2.svg",
-    "groupon": "img/groupon.svg",
-    "ford": "img/ford.svg",
-    "testing-suite": "img/testing-suite-3.png",
-  }
-
-  let imgCollection = Array.prototype.slice.call(document.getElementsByTagName('img'));
-  imgCollection.forEach((img) => {
-    if (img.dataset.img){
-      img.src = imgSrc[img.dataset.img];
-    }
-  });
-
-  var handler = StripeCheckout.configure({
-    key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
-    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-    locale: 'auto',
-    zipCode: true,
-    token: function(token) {
-      preflight(null, null, "paid", token);
-    }
-  }); // end var handler = StripeCheckout.configure({
-
-  window.addEventListener("popstate", function(event) {
-    handler.close();
-  });
+  document.addEventListener('scroll', function() {
+    lazyLoad();
+  }, {once: true})
 });
 
