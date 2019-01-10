@@ -528,9 +528,32 @@ var handler = StripeCheckout.configure({
 window.addEventListener("popstate", function (event) {
   handler.close();
 });
-window.addEventListener('load', function () {
+window.addEventListener('DOMContentLoaded', function () {
   if (getUrlParams()['refcode'] === "ecf85b5bebb743ceb675") {
     UserActivity.add(new Activity('didClickUpgradeLink', true));
     UserActivity.maybePostActivity();
   }
+
+  var lazyLoadedIframe = document.getElementById('iframe-video-lazy');
+  lazyLoadedIframe.src = "https://www.youtube.com/embed/6fud8HA-wP4";
+  lazyLoadedIframe.width = "440";
+  lazyLoadedIframe.height = "315";
+  lazyLoadedIframe.frameborder = 0;
+  lazyLoadedIframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+  lazyLoadedIframe.allowfullscreen = true;
+  var imgSrc = {
+    "calendar": "img/calendar.svg",
+    "blackboard": "img/blackboard.svg",
+    "online-class": "img/online-class.svg",
+    "amazon": "img/amazon2.svg",
+    "groupon": "img/groupon.svg",
+    "ford": "img/ford.svg",
+    "testing-suite": "img/testing-suite-2.png"
+  };
+  var imgCollection = Array.prototype.slice.call(document.getElementsByTagName('img'));
+  imgCollection.forEach(function (img) {
+    if (img.dataset.img) {
+      img.src = imgSrc[img.dataset.img];
+    }
+  });
 });

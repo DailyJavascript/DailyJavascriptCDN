@@ -94,7 +94,7 @@ function UserActivity() {
    if (!xhr) {
      return false;
    }
-   xhr.open("POST", 'https://dailyjavascript.herokuapp.com/visits/update', true);
+   xhr.open("POST", 'http://localhost:3000/visits/update', true);
    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
    let params = `field=${fieldName}&value=${value}&visitID=${visitID}`;
    xhr.send(params);
