@@ -188,21 +188,21 @@ const lazyLoad = () => {
       img.src = imgSrc[img.dataset.img];
     }
   });
-
-  var handler = StripeCheckout.configure({
-    key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
-    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-    locale: 'auto',
-    zipCode: true,
-    token: function(token) {
-      preflight(null, null, "paid", token);
-    }
-  }); // end var handler = StripeCheckout.configure({
-
-  window.addEventListener("popstate", function(event) {
-    handler.close();
-  });
 }
+
+var handler = StripeCheckout.configure({
+  key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
+  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+  locale: 'auto',
+  zipCode: true,
+  token: function(token) {
+    preflight(null, null, "paid", token);
+  }
+}); // end var handler = StripeCheckout.configure({
+
+window.addEventListener("popstate", function(event) {
+  handler.close();
+});
 
 const UserActivitySectionFlags = {
   instructions: 0,
@@ -495,16 +495,17 @@ function signUp(emailElement, membershipLevel, stripeToken) {
 function openStripePopup(membershipLevel, e) {
   captureUserActivity(e, membershipLevel);
   var descript = null, amt = null;
+  
   if (membershipLevel == "standard") {
     plan = "standard";
     descript = "Daily JavaScript standard Membership";
     amt = 800;
-
   } else if (membershipLevel == "premium") {
     plan = "premium";
     descript = "Daily JavaScript premium Membership";
     amt = 1000;
   }
+
   handler.open({
     image: '/img/js.png',
     name: 'Daily JavaScript',
