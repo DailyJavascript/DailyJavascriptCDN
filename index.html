@@ -378,8 +378,10 @@
     </div>
   </div>
   <script async defer src="https://polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
-  <script defer src="https://checkout.stripe.com/checkout.js"></script>
-  <script defer src="dist/index.js"></script>
+  <link rel=”preload” href=”https://checkout.stripe.com/checkout.js” as=”script/>
+  <link rel=”preload” href=”dist/index.js as=”script/>
+  <!-- <script async defer src="https://checkout.stripe.com/checkout.js"></script>
+  <script async defer src="dist/index.js"></script> -->
 </body>
 
 </html>
