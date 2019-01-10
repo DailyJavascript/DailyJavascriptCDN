@@ -10,8 +10,10 @@
   <meta name="author" content="">
   <meta name="google-site-verification" content="MpZhRj0G7EU1xkqExchOPPn3tt8UgFBNGJAZ_VjkH74" />
   <title>Daily JavaScript</title>
-  <script async defer src="dist/localStorage.js"></script>
-  <script async defer src="https://polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
+  <script defer src="dist/localStorage.js"></script>
+  <script defer src="https://polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
+  <script defer src="https://checkout.stripe.com/checkout.js"></script>
+  <script defer src="dist/index.js"></script>
   <!-- Bootstrap core CSS -->
   <link async defer href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -355,8 +357,6 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="https://checkout.stripe.com/checkout.js"></script>
-  <script src="dist/index.js"></script>
   <div class="modal-backdrop fade hidden"></div>
   <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
