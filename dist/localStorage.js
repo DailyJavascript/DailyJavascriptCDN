@@ -122,5 +122,3 @@ function UserActivity() {
     }
   };
 }
-
-window.UserActivity = new UserActivity();

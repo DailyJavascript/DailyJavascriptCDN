@@ -154,6 +154,7 @@ if (!Array.from) {
 
 
 var plan = "";
+var handler;
 var modalResponse = {
   Failure: "Uh, oh!  Looks like there's an issue.  Please try again later.",
   Success: "You'll be sent a confirmation email shortly. Thank you for joining Daily JavaScript!",
@@ -193,21 +194,21 @@ var lazyLoad = function lazyLoad() {
       img.src = imgSrc[img.dataset.img];
     }
   });
+  handler = StripeCheckout.configure({
+    key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
+    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+    locale: 'auto',
+    zipCode: true,
+    token: function token(_token) {
+      preflight(null, null, "paid", _token);
+    }
+  }); // end var handler = StripeCheckout.configure({
+
+  window.addEventListener("popstate", function (event) {
+    handler.close();
+  });
 };
 
-var handler = StripeCheckout.configure({
-  key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
-  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-  locale: 'auto',
-  zipCode: true,
-  token: function token(_token) {
-    preflight(null, null, "paid", _token);
-  }
-}); // end var handler = StripeCheckout.configure({
-
-window.addEventListener("popstate", function (event) {
-  handler.close();
-});
 var UserActivitySectionFlags = {
   instructions: 0,
   testimonials: 0,
@@ -550,6 +551,7 @@ function openStripePopup(membershipLevel, e) {
 
 
 window.addEventListener('load', function () {
+  window.UserActivity = new UserActivity();
   var observer = new IntersectionObserver(callback, options);
   ["instructions", "payment", 'testimonials', "sample_of_paid_features", "sample_question"].forEach(function (id) {
     var target = document.getElementById(id);
