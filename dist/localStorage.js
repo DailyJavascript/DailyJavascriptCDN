@@ -122,3 +122,7 @@ function UserActivity() {
     }
   };
 }
+
+window.addEventListener('load', function () {
+  window.UserActivity = new UserActivity();
+});
