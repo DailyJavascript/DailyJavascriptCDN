@@ -320,6 +320,61 @@ function getRefCode(){
   }
 }
 
+function postRefCode() {
+  const xhr = new XMLHttpRequest();
+  const refcode = getRefCode();
+
+  if (!xhr) {
+    return false;
+  }
+
+  xhr.open("POST", 'https://dailyjavascript.herokuapp.com/visits', true);
+  //Send the proper header information along with the request
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function () { // Call a function when the state changes.
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      storeInLocalStorage('visitID', xhr.response);
+      window.visitID = xhr.response;
+      UserActivity.maybePostActivity();
+    }
+  }
+  xhr.send("blogVisit=0&"+refcode);
+}
+
+function UserActivity() {
+  this.queue = [];
+  this.add = function(activity) {
+     this.queue.push(activity);
+  };
+  this.remove = function() {
+     return this.queue.pop();
+  };
+  this.size = function() {
+     return this.queue.length;
+  };
+
+  this.postUserActivity = function(fieldName, value, visitID) {
+   const xhr = new XMLHttpRequest();
+   if (!xhr) {
+     return false;
+   }
+   xhr.open("POST", 'https://dailyjavascript.herokuapp.com/visits/update', true);
+   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+   let params = `field=${fieldName}&value=${value}&visitID=${visitID}`;
+   xhr.send(params);
+ };
+  this.maybePostActivity = function(){
+    if (window.visitID){
+      while (this.size() > 0) {
+       let activity = this.remove();
+       this.postUserActivity(activity.fieldName, activity.value, activity.visitID);
+      }
+    } else {
+      return;
+    }
+  }
+}
+
 function addModalHeader(response) {
   document.getElementById('modal-header-text').innerHTML = (response === "Loading") ? "Processing Signup" : response;
 }
@@ -496,7 +551,7 @@ function signUp(emailElement, membershipLevel, stripeToken) {
 function openStripePopup(membershipLevel, e) {
   captureUserActivity(e, membershipLevel);
   var descript = null, amt = null;
-  
+
   if (membershipLevel == "standard") {
     plan = "standard";
     descript = "Daily JavaScript standard Membership";
@@ -520,6 +575,13 @@ function openStripePopup(membershipLevel, e) {
 // ----- event listeners
 window.addEventListener('load', function(){
   window.UserActivity = new UserActivity();
+
+  if (!parseLocalStorageJSON('visitID')){
+    postRefCode();
+  } else {
+    window.visitID = parseLocalStorageJSON('visitID');
+  }
+
   var observer = new IntersectionObserver(callback, options);
 
   ["instructions", "payment", 'testimonials', "sample_of_paid_features", "sample_question"].forEach( (id) => {
