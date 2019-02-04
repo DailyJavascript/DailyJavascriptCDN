@@ -172,13 +172,13 @@ var btnClass = {
 };
 
 var lazyLoad = function lazyLoad() {
-  var lazyLoadedIframe = document.getElementById('iframe-video-lazy');
-  lazyLoadedIframe.src = "https://www.youtube.com/embed/6fud8HA-wP4";
-  lazyLoadedIframe.width = "440";
-  lazyLoadedIframe.height = "315";
-  lazyLoadedIframe.frameborder = 0;
-  lazyLoadedIframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
-  lazyLoadedIframe.allowfullscreen = true;
+  // let lazyLoadedIframe = document.getElementById('iframe-video-lazy');
+  // lazyLoadedIframe.src = "https://www.youtube.com/embed/6fud8HA-wP4";
+  // lazyLoadedIframe.width = "440";
+  // lazyLoadedIframe.height = "315";
+  // lazyLoadedIframe.frameborder  = 0;
+  // lazyLoadedIframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+  // lazyLoadedIframe.allowfullscreen = true;
   var imgSrc = {
     "calendar": "img/calendar.svg",
     "blackboard": "img/blackboard.svg",
