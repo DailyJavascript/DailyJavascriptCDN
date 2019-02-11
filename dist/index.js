@@ -153,7 +153,6 @@ if (!Array.from) {
 } // ------ global variables
 
 
-var defaultPrice = 8;
 var price = 800;
 var plan = "premium";
 var handler;

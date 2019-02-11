@@ -145,7 +145,6 @@ if (!Array.from) {
 
 
 // ------ global variables
-let defaultPrice = 8;
 let price = 800;
 let plan = "premium";
 let handler;
