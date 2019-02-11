@@ -3,8 +3,6 @@
 // forEacH polyfill
 // Production steps of ECMA-262, Edition 5, 15.4.4.18
 // Reference: http://es5.github.io/#x15.4.4.18
-var defaultPrice = 8;
-
 if (!Array.prototype.forEach) {
   Array.prototype.forEach = function (callback
   /*, thisArg*/
@@ -155,7 +153,9 @@ if (!Array.from) {
 } // ------ global variables
 
 
-var plan = "";
+var defaultPrice = 8;
+var price = 800;
+var plan = "premium";
 var handler;
 var modalResponse = {
   Failure: "Uh, oh!  Looks like there's an issue.  Please try again later.",
@@ -554,7 +554,13 @@ function getPriceForSpecialOffer() {
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var response = this.responseText + "";
-      if (response != "not found") document.getElementById("premiumPrice").innerHTML = parseFloat(response);
+
+      if (response != "not found") {
+        document.getElementById("premiumPrice").innerHTML = parseFloat(response);
+        price = parseFloat(response) * 100;
+        plan = getUrlParams()["special_offer_code"];
+      }
+
       return true;
     } // end if (this.readyState == 4 && this.status == 200)
 
@@ -610,24 +616,11 @@ function signUp(emailElement, membershipLevel, stripeToken) {
 
 function openStripePopup(membershipLevel, e) {
   captureUserActivity(e, membershipLevel);
-  var descript = null,
-      amt = null;
-
-  if (membershipLevel == "standard") {
-    plan = "standard";
-    descript = "Daily JavaScript standard Membership";
-    amt = 800;
-  } else if (membershipLevel == "premium") {
-    plan = "premium";
-    descript = "Daily JavaScript premium Membership";
-    amt = 1000;
-  }
-
   handler.open({
     image: '/img/js.png',
     name: 'Daily JavaScript',
-    description: descript,
-    amount: amt,
+    description: "Daily JavaScript Premium Membership",
+    amount: price,
     panelLabel: 'Pay {{amount}}'
   });
 } // end function openStripePopup(membershipLevel)
