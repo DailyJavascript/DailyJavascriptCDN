@@ -3,6 +3,8 @@
 // forEacH polyfill
 // Production steps of ECMA-262, Edition 5, 15.4.4.18
 // Reference: http://es5.github.io/#x15.4.4.18
+defaultPrice = 8;
+
 if (!Array.prototype.forEach) {
   Array.prototype.forEach = function (callback
   /*, thisArg*/
@@ -546,6 +548,25 @@ function makePreflightRequest(emailElement, membershipLevel, stripeToken) {
 } // end function makePreflightRequest(emailElement)
 
 
+function getPriceForSpecialOffer() {
+  var xhttp = new XMLHttpRequest();
+
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = this.responseText + "";
+      if (response != "not found") document.getElementById("premiumPrice").innerHTML = parseFloat(response);
+      return true;
+    } // end if (this.readyState == 4 && this.status == 200)
+
+  }; // end xhttp.onreadystatechange = function()
+
+
+  xhttp.open("GET", "https://dailyjavascript.herokuapp.com/users/get_price/?special_offer_code=" + getUrlParams()["special_offer_code"], true);
+  xhttp.send();
+  return false;
+} // end function makePreflightRequest(emailElement)
+
+
 function signUp(emailElement, membershipLevel, stripeToken) {
   var data = null;
 
@@ -616,6 +637,10 @@ function openStripePopup(membershipLevel, e) {
 
 window.addEventListener('load', function () {
   window.UserActivity = new UserActivity();
+
+  if (!!getUrlParams()['special_offer_code']) {
+    getPriceForSpecialOffer();
+  }
 
   if (!parseLocalStorageJSON('visitID')) {
     postRefCode();
