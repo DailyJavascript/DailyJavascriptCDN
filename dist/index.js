@@ -153,7 +153,7 @@ if (!Array.from) {
 } // ------ global variables
 
 
-var price = 800;
+var price = 100;
 var plan = "premium";
 var handler;
 var modalResponse = {

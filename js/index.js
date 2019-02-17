@@ -145,7 +145,7 @@ if (!Array.from) {
 
 
 // ------ global variables
-let price = 800;
+let price = 100;
 let plan = "premium";
 let handler;
 let modalResponse = {
