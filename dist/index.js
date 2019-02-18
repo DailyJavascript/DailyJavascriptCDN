@@ -150,27 +150,47 @@ if (!Array.from) {
       return A;
     };
   }();
-} // ------ global variables
+}
 
+function UserActivity() {
+  this.queue = [];
 
-var price = 100;
-var plan = "premium";
-var handler;
-var modalResponse = {
-  Failure: "Uh, oh!  Looks like there's an issue.  Please try again later.",
-  Success: "You'll be sent a confirmation email shortly. Thank you for joining Daily JavaScript!",
-  Loading: ""
-};
-var objectData = {
-  Failure: '/img/fail_mark.svg',
-  Success: '/img/success_checkmark.svg',
-  Loading: '/img/loading.svg'
-};
-var btnClass = {
-  Failure: 'btn-danger',
-  Success: 'btn-success',
-  Loading: 'hidden'
-};
+  this.add = function (activity) {
+    this.queue.push(activity);
+  };
+
+  this.remove = function () {
+    return this.queue.pop();
+  };
+
+  this.size = function () {
+    return this.queue.length;
+  };
+
+  this.postUserActivity = function (fieldName, value, visitID) {
+    var xhr = new XMLHttpRequest();
+
+    if (!xhr) {
+      return false;
+    }
+
+    xhr.open("POST", 'https://dailyjavascript.herokuapp.com/visits/update', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    var params = "field=".concat(fieldName, "&value=").concat(value, "&visitID=").concat(visitID);
+    xhr.send(params);
+  };
+
+  this.maybePostActivity = function () {
+    if (window.visitID) {
+      while (this.size() > 0) {
+        var activity = this.remove();
+        this.postUserActivity(activity.fieldName, activity.value, activity.visitID);
+      }
+    } else {
+      return;
+    }
+  };
+}
 
 var lazyLoad = function lazyLoad() {
   // let lazyLoadedIframe = document.getElementById('iframe-video-lazy');
@@ -195,6 +215,9 @@ var lazyLoad = function lazyLoad() {
       img.src = imgSrc[img.dataset.img];
     }
   });
+};
+
+function handleStripeSetup() {
   handler = StripeCheckout.configure({
     key: 'pk_live_5ZgfXMNd2JnfWkv9bgW8xRJ4',
     image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
@@ -208,7 +231,7 @@ var lazyLoad = function lazyLoad() {
   window.addEventListener("popstate", function (event) {
     handler.close();
   });
-};
+}
 
 var UserActivitySectionFlags = {
   instructions: 0,
@@ -350,46 +373,6 @@ function postRefCode() {
   };
 
   xhr.send("blogVisit=0&" + refcode);
-}
-
-function UserActivity() {
-  this.queue = [];
-
-  this.add = function (activity) {
-    this.queue.push(activity);
-  };
-
-  this.remove = function () {
-    return this.queue.pop();
-  };
-
-  this.size = function () {
-    return this.queue.length;
-  };
-
-  this.postUserActivity = function (fieldName, value, visitID) {
-    var xhr = new XMLHttpRequest();
-
-    if (!xhr) {
-      return false;
-    }
-
-    xhr.open("POST", 'https://dailyjavascript.herokuapp.com/visits/update', true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    var params = "field=".concat(fieldName, "&value=").concat(value, "&visitID=").concat(visitID);
-    xhr.send(params);
-  };
-
-  this.maybePostActivity = function () {
-    if (window.visitID) {
-      while (this.size() > 0) {
-        var activity = this.remove();
-        this.postUserActivity(activity.fieldName, activity.value, activity.visitID);
-      }
-    } else {
-      return;
-    }
-  };
 }
 
 function addModalHeader(response) {
