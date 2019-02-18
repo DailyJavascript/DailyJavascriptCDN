@@ -408,7 +408,7 @@ header.masthead h1 {
 }
 
 .plan {
-  height: 10rem;
+  height: 11.5rem;
 }
 
 .plan li {
@@ -440,6 +440,9 @@ sup {
 @media (max-width: 768px) {
   .cta-form {
     padding-top: 1rem;
+  }
+  .plan {
+    height: 9.5rem;
   }
 }
 
